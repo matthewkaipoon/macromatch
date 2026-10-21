@@ -1,0 +1,32 @@
+# Python virtual environments
+.venv/
+venv/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Credentials and environment configuration
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Locally generated databases
+*.duckdb
+*.duckdb.wal
+*.db
+
+# Temporary and generated data
+data/processed/
+data/temp/
+audit_output/
+
+# IDE and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
