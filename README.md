@@ -19,9 +19,24 @@ The project will initially use two FoodData Central datasets:
 - Foundation Foods
 - SR Legacy
 
-An exploratory API audit identified missing nutrient values, different energy calculation methods, potentially ambiguous food records and other challenges relevant to nutritional comparisons.
+### Exploratory API audit
 
-These findings will guide the design of the data transformation and validation pipeline.
+An initial investigation sampled 156 USDA food records
+across Foundation Foods and SR Legacy.
+
+The audit found:
+- 96.8% completeness for core macros.
+- 73.7% completeness when including fibre.
+- Different energy calculation definitions.
+- Missing nutritional measurements and anomalous values.
+- Ambiguous search results and overlapping food descriptions.
+
+These findings inform the data cleaning, modelling and
+validation requirements for MacroMatch.
+
+[Read the full data audit](docs/data_audit.md)
+
+[View the audit code and results](audits/usda/)
 
 ## How it works
 
