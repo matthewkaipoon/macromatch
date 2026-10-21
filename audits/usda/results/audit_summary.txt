@@ -1,0 +1,63 @@
+MACROMATCH — USDA FOODDATA CENTRAL API AUDIT
+=========================================================
+UTC: 2026-10-21T13:59:36.942175+00:00
+Requests made: 40
+Remaining reported quota: 3559
+Successful searches: 32
+Search/detail failures: 0/0
+Details returned: 156
+Unique FDC IDs: 156
+
+1. MACRO COVERAGE (using detailed /foods records)
+  Foundation   n= 61  core= 91.8%  core+fibre= 44.3%  usable(all)= 44.3%
+     nutrient presence %: energy_kcal=91.8, protein_g=91.8, fat_g=91.8, carbs_g=91.8, fiber_g=50.8
+     chosen energy IDs: {'None': 5, '2048': 37, '1008': 16, '2047': 3}
+  SR Legacy    n= 95  core=100.0%  core+fibre= 92.6%  usable(all)= 92.6%
+     nutrient presence %: energy_kcal=100.0, protein_g=100.0, fat_g=100.0, carbs_g=100.0, fiber_g=92.6
+     chosen energy IDs: {'1008': 95}
+  OVERALL: n=156, complete core=96.8%, complete with fibre=73.7%, usable with fibre=73.7%
+  Missing counts: {'energy_kcal': 5, 'protein_g': 5, 'fat_g': 5, 'carbs_g': 5, 'fiber_g': 37}
+
+2. TRANSFORMATION / QUALITY EVIDENCE
+  Nutrient schema by source: {'Foundation': {'nested_nutrient_entries': 2972, 'flat_nutrient_entries': 0}, 'SR Legacy': {'nested_nutrient_entries': 8100, 'flat_nutrient_entries': 0}}
+  Flag counts (candidate issues, not all proven errors): {'multiple_energy_definitions': 37, 'out_of_range_carbs_g': 2}
+  Identical normalised-name groups: 2
+   - broccoli raw: 747447/Foundation, 170379/SR Legacy
+   - egg white dried: 323793/Foundation, 172204/SR Legacy
+
+3. INGREDIENT TERM COVERAGE (sample-dependent)
+  chicken breast    sampled=12  usable core=9   usable with fibre=6  
+  salmon            sampled=8   usable core=8   usable with fibre=6  
+  egg               sampled=12  usable core=12  usable with fibre=7  
+  tofu              sampled=6   usable core=6   usable with fibre=5  
+  lentils           sampled=7   usable core=7   usable with fibre=4  
+  chickpeas         sampled=8   usable core=8   usable with fibre=6  
+  oats              sampled=10  usable core=10  usable with fibre=8  
+  rice              sampled=12  usable core=12  usable with fibre=10 
+  broccoli          sampled=7   usable core=7   usable with fibre=7  
+  spinach           sampled=8   usable core=8   usable with fibre=7  
+  banana            sampled=9   usable core=9   usable with fibre=9  
+  apple             sampled=12  usable core=12  usable with fibre=10 
+  almonds           sampled=12  usable core=12  usable with fibre=12 
+  yogurt            sampled=11  usable core=11  usable with fibre=7  
+  potato            sampled=11  usable core=11  usable with fibre=7  
+  beans             sampled=12  usable core=8   usable with fibre=5  
+
+4. DECISION GATE
+  Exploratory threshold met: YES
+  At least 80 sampled foods, 60 usable with fibre, and 8 queries with >=2 usable foods; arbitrary exploratory threshold, not proof of fitness for production.
+  This is NOT a production or scientific suitability verdict.
+
+5. LIMITATIONS
+  - Keyword-search sample, NOT a random representative sample of all USDA foods.
+  - Source types filtered to Foundation and SR Legacy.
+  - Search result ranking and query choice can bias coverage and collision counts.
+  - Exact/near-identical names are review candidates, NOT proven duplicates.
+  - Nutrient completeness is not proof of analytical accuracy.
+  - Per-100g comparisons need like-for-like preparation and edible portion.
+  - Nutrition relevance and scoring clinical validity are not established by this audit.
+  - Presence of 2047/2048 energy alternatives is not itself a data defect.
+
+SEND ME: audit_summary.txt (whole text), and optionally foods_audit.csv for detailed review.
+
+Completion status: complete

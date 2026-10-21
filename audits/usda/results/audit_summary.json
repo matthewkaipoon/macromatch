@@ -1,0 +1,428 @@
+{
+  "audit_version": "1.0.0",
+  "timestamp_utc": "2026-10-21T13:59:36.942175+00:00",
+  "sampling_limitations": [
+    "Keyword-search sample, NOT a random representative sample of all USDA foods.",
+    "Source types filtered to Foundation and SR Legacy.",
+    "Search result ranking and query choice can bias coverage and collision counts.",
+    "Exact/near-identical names are review candidates, NOT proven duplicates.",
+    "Nutrient completeness is not proof of analytical accuracy.",
+    "Per-100g comparisons need like-for-like preparation and edible portion.",
+    "Nutrition relevance and scoring clinical validity are not established by this audit.",
+    "Presence of 2047/2048 energy alternatives is not itself a data defect."
+  ],
+  "sampling": {
+    "search_terms": [
+      "chicken breast",
+      "salmon",
+      "egg",
+      "tofu",
+      "lentils",
+      "chickpeas",
+      "oats",
+      "rice",
+      "broccoli",
+      "spinach",
+      "banana",
+      "apple",
+      "almonds",
+      "yogurt",
+      "potato",
+      "beans"
+    ],
+    "data_types": [
+      "Foundation",
+      "SR Legacy"
+    ],
+    "max_foods": 192,
+    "per_bucket": 6,
+    "page_size": 25,
+    "second_pages": false,
+    "sample_strategy": "Round-robin unique FDC IDs drawn from keyword x data type searches, not random"
+  },
+  "requests_made": 40,
+  "last_reported_rate_limit_remaining": "3559",
+  "search_errors": [],
+  "detail_errors": [],
+  "successful_searches": 32,
+  "sampled_detail_records": 156,
+  "unique_fdc_ids": 156,
+  "by_data_type": {
+    "Foundation": {
+      "n": 61,
+      "complete_core_pct": 91.8,
+      "complete_with_fiber_pct": 44.3,
+      "usable_with_fiber_pct": 44.3,
+      "nutrient_presence_pct": {
+        "energy_kcal": 91.8,
+        "protein_g": 91.8,
+        "fat_g": 91.8,
+        "carbs_g": 91.8,
+        "fiber_g": 50.8
+      },
+      "energy_nutrient_id_counts": {
+        "None": 5,
+        "2048": 37,
+        "1008": 16,
+        "2047": 3
+      },
+      "median_nutrient_count": 35
+    },
+    "SR Legacy": {
+      "n": 95,
+      "complete_core_pct": 100.0,
+      "complete_with_fiber_pct": 92.6,
+      "usable_with_fiber_pct": 92.6,
+      "nutrient_presence_pct": {
+        "energy_kcal": 100.0,
+        "protein_g": 100.0,
+        "fat_g": 100.0,
+        "carbs_g": 100.0,
+        "fiber_g": 92.6
+      },
+      "energy_nutrient_id_counts": {
+        "1008": 95
+      },
+      "median_nutrient_count": 83
+    }
+  },
+  "overall": {
+    "complete_core_count": 151,
+    "complete_core_pct": 96.8,
+    "complete_with_fiber_count": 115,
+    "complete_with_fiber_pct": 73.7,
+    "usable_with_fiber_count": 115,
+    "usable_with_fiber_pct": 73.7,
+    "missing_counts": {
+      "energy_kcal": 5,
+      "protein_g": 5,
+      "fat_g": 5,
+      "carbs_g": 5,
+      "fiber_g": 37
+    },
+    "flag_counts": {
+      "multiple_energy_definitions": 37,
+      "out_of_range_carbs_g": 2
+    },
+    "name_collision_groups": 2,
+    "name_collision_groups_preview": [
+      {
+        "name": "broccoli raw",
+        "records": [
+          {
+            "fdc_id": 747447,
+            "source": "Foundation"
+          },
+          {
+            "fdc_id": 170379,
+            "source": "SR Legacy"
+          }
+        ]
+      },
+      {
+        "name": "egg white dried",
+        "records": [
+          {
+            "fdc_id": 323793,
+            "source": "Foundation"
+          },
+          {
+            "fdc_id": 172204,
+            "source": "SR Legacy"
+          }
+        ]
+      }
+    ],
+    "nutrient_schema_by_source": {
+      "Foundation": {
+        "nested_nutrient_entries": 2972,
+        "flat_nutrient_entries": 0
+      },
+      "SR Legacy": {
+        "nested_nutrient_entries": 8100,
+        "flat_nutrient_entries": 0
+      }
+    },
+    "source_count": 2
+  },
+  "query_coverage": {
+    "chicken breast": {
+      "sampled": 12,
+      "usable_core": 9,
+      "usable_with_fiber": 6,
+      "examples": [
+        {
+          "fdc_id": 171515,
+          "description": "Chicken breast tenders, breaded, uncooked",
+          "data_type": "SR Legacy"
+        },
+        {
+          "fdc_id": 174608,
+          "description": "Chicken breast, roll, oven-roasted",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "salmon": {
+      "sampled": 8,
+      "usable_core": 8,
+      "usable_with_fiber": 6,
+      "examples": [
+        {
+          "fdc_id": 172343,
+          "description": "Fish oil, salmon",
+          "data_type": "SR Legacy"
+        },
+        {
+          "fdc_id": 173688,
+          "description": "Fish, salmon, chinook, raw",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "egg": {
+      "sampled": 12,
+      "usable_core": 12,
+      "usable_with_fiber": 7,
+      "examples": [
+        {
+          "fdc_id": 174901,
+          "description": "Bagels, egg",
+          "data_type": "SR Legacy"
+        },
+        {
+          "fdc_id": 748967,
+          "description": "Eggs, Grade A, Large, egg whole",
+          "data_type": "Foundation"
+        }
+      ]
+    },
+    "tofu": {
+      "sampled": 6,
+      "usable_core": 6,
+      "usable_with_fiber": 5,
+      "examples": [
+        {
+          "fdc_id": 167722,
+          "description": "Tofu yogurt",
+          "data_type": "SR Legacy"
+        },
+        {
+          "fdc_id": 172451,
+          "description": "Tofu, fried",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "lentils": {
+      "sampled": 7,
+      "usable_core": 7,
+      "usable_with_fiber": 4,
+      "examples": [
+        {
+          "fdc_id": 172420,
+          "description": "Lentils, raw",
+          "data_type": "SR Legacy"
+        },
+        {
+          "fdc_id": 174284,
+          "description": "Lentils, pink or red, raw",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "chickpeas": {
+      "sampled": 8,
+      "usable_core": 8,
+      "usable_with_fiber": 6,
+      "examples": [
+        {
+          "fdc_id": 174288,
+          "description": "Chickpea flour (besan)",
+          "data_type": "SR Legacy"
+        },
+        {
+          "fdc_id": 173756,
+          "description": "Chickpeas (garbanzo beans, bengal gram), mature seeds, raw",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "oats": {
+      "sampled": 10,
+      "usable_core": 10,
+      "usable_with_fiber": 8,
+      "examples": [
+        {
+          "fdc_id": 2261421,
+          "description": "Flour, oat, whole grain",
+          "data_type": "Foundation"
+        },
+        {
+          "fdc_id": 173576,
+          "description": "Oil, oat",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "rice": {
+      "sampled": 12,
+      "usable_core": 12,
+      "usable_with_fiber": 10,
+      "examples": [
+        {
+          "fdc_id": 173161,
+          "description": "Rice crackers",
+          "data_type": "SR Legacy"
+        },
+        {
+          "fdc_id": 167967,
+          "description": "Snacks, rice cakes, brown rice, buckwheat",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "broccoli": {
+      "sampled": 7,
+      "usable_core": 7,
+      "usable_with_fiber": 7,
+      "examples": [
+        {
+          "fdc_id": 747447,
+          "description": "Broccoli, raw",
+          "data_type": "Foundation"
+        },
+        {
+          "fdc_id": 170379,
+          "description": "Broccoli, raw",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "spinach": {
+      "sampled": 8,
+      "usable_core": 8,
+      "usable_with_fiber": 7,
+      "examples": [
+        {
+          "fdc_id": 1999632,
+          "description": "Spinach, baby",
+          "data_type": "Foundation"
+        },
+        {
+          "fdc_id": 170494,
+          "description": "Spinach souffle",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "banana": {
+      "sampled": 9,
+      "usable_core": 9,
+      "usable_with_fiber": 9,
+      "examples": [
+        {
+          "fdc_id": 1105073,
+          "description": "Bananas, overripe, raw",
+          "data_type": "Foundation"
+        },
+        {
+          "fdc_id": 173945,
+          "description": "Bananas, dehydrated, or banana powder",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "apple": {
+      "sampled": 12,
+      "usable_core": 12,
+      "usable_with_fiber": 10,
+      "examples": [
+        {
+          "fdc_id": 1750340,
+          "description": "Apples, fuji, with skin, raw",
+          "data_type": "Foundation"
+        },
+        {
+          "fdc_id": 174988,
+          "description": "Croissants, apple",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "almonds": {
+      "sampled": 12,
+      "usable_core": 12,
+      "usable_with_fiber": 12,
+      "examples": [
+        {
+          "fdc_id": 2261420,
+          "description": "Flour, almond",
+          "data_type": "Foundation"
+        },
+        {
+          "fdc_id": 170567,
+          "description": "Nuts, almonds",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "yogurt": {
+      "sampled": 11,
+      "usable_core": 11,
+      "usable_with_fiber": 7,
+      "examples": [
+        {
+          "fdc_id": 167722,
+          "description": "Tofu yogurt",
+          "data_type": "SR Legacy"
+        },
+        {
+          "fdc_id": 168104,
+          "description": "Frozen yogurts, chocolate",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "potato": {
+      "sampled": 11,
+      "usable_core": 11,
+      "usable_with_fiber": 7,
+      "examples": [
+        {
+          "fdc_id": 2261422,
+          "description": "Flour, potato",
+          "data_type": "Foundation"
+        },
+        {
+          "fdc_id": 167943,
+          "description": "Bread, potato",
+          "data_type": "SR Legacy"
+        }
+      ]
+    },
+    "beans": {
+      "sampled": 12,
+      "usable_core": 8,
+      "usable_with_fiber": 5,
+      "examples": [
+        {
+          "fdc_id": 169885,
+          "description": "Beans, liquid from stewed kidney beans",
+          "data_type": "SR Legacy"
+        },
+        {
+          "fdc_id": 175207,
+          "description": "Chili with beans, canned",
+          "data_type": "SR Legacy"
+        }
+      ]
+    }
+  },
+  "preliminary_gate": {
+    "passed_exploratory_sample_threshold": true,
+    "criteria": "At least 80 sampled foods, 60 usable with fibre, and 8 queries with >=2 usable foods; arbitrary exploratory threshold, not proof of fitness for production."
+  },
+  "completion": "complete",
+  "selected_detail_ids": 156
+}
