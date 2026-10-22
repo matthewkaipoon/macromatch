@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0",
+  "source": "USDA FoodData Central",
+  "api_base": "https://api.nal.usda.gov/fdc/v1",
+  "started_utc": "2026-10-22T10:33:35.819274+00:00",
+  "completed_utc": "2026-10-22T10:33:42.544423+00:00",
+  "status": "complete",
+  "settings": {
+    "terms": [
+      "broccoli",
+      "lentils"
+    ],
+    "data_types": [
+      "Foundation",
+      "SR Legacy"
+    ],
+    "pages": 1,
+    "page_size": 5,
+    "max_foods": 12,
+    "batch_size": 6,
+    "max_requests": 8
+  },
+  "requests": [
+    {
+      "sequence": 1,
+      "retrieved_utc": "2026-10-22T10:33:37.691342+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "broccoli",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0001_search.json",
+      "status": 200,
+      "bytes": 43220,
+      "sha256": "7be192842d299ca4a0f1578dc2983813e07b96818ace22d70ba7985dc5b94bda",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3598"
+    },
+    {
+      "sequence": 2,
+      "retrieved_utc": "2026-10-22T10:33:38.595266+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "broccoli",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0002_search.json",
+      "status": 200,
+      "bytes": 196301,
+      "sha256": "add640f34e50052062bbeca60f9b6d62a0cedc14f599164d732ed92ae22ab7a0",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3597"
+    },
+    {
+      "sequence": 3,
+      "retrieved_utc": "2026-10-22T10:33:38.985402+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "lentils",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0003_search.json",
+      "status": 200,
+      "bytes": 8359,
+      "sha256": "93d437e01dd11b5044971efc554c724874bb814113debdc37fcad49836a551e5",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3596"
+    },
+    {
+      "sequence": 4,
+      "retrieved_utc": "2026-10-22T10:33:39.511774+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "lentils",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0004_search.json",
+      "status": 200,
+      "bytes": 117519,
+      "sha256": "27cafd32928ff583a6a49c8c89e6f449b5d42fdb58f6ba79dcc2576cdacbde5e",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3595"
+    },
+    {
+      "sequence": 5,
+      "retrieved_utc": "2026-10-22T10:33:41.105190+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          747447,
+          170379,
+          170382,
+          170381,
+          169392,
+          169404
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0005_details.json",
+      "status": 200,
+      "bytes": 672152,
+      "sha256": "015a2c6bd30e47c6e5b77d43a1398586602f0f94f800ab41800d8144cb109d9e",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3594"
+    },
+    {
+      "sequence": 6,
+      "retrieved_utc": "2026-10-22T10:33:42.523363+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          2644283,
+          172420,
+          168427,
+          174284,
+          171577,
+          175254
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0006_details.json",
+      "status": 200,
+      "bytes": 187870,
+      "sha256": "f31ec649953fce7f1e4914102bcf722321e2fb9fab83a4db59ec8022fa16e163",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3593"
+    }
+  ],
+  "selected_fdc_ids": [
+    747447,
+    170379,
+    170382,
+    170381,
+    169392,
+    169404,
+    2644283,
+    172420,
+    168427,
+    174284,
+    171577,
+    175254
+  ],
+  "missing_detail_ids": []
+}
