@@ -1,0 +1,1331 @@
+{
+  "schema_version": "1.0",
+  "source": "USDA FoodData Central",
+  "api_base": "https://api.nal.usda.gov/fdc/v1",
+  "started_utc": "2026-10-22T11:43:20.449411+00:00",
+  "completed_utc": "2026-10-22T11:45:22.984574+00:00",
+  "status": "complete",
+  "settings": {
+    "terms": [
+      "chicken breast",
+      "salmon",
+      "egg",
+      "tofu",
+      "lentils",
+      "chickpeas",
+      "oats",
+      "rice",
+      "broccoli",
+      "spinach",
+      "banana",
+      "apple",
+      "almonds",
+      "yogurt",
+      "potato",
+      "beans",
+      "quinoa",
+      "beef",
+      "milk",
+      "pumpkin seeds"
+    ],
+    "data_types": [
+      "Foundation",
+      "SR Legacy"
+    ],
+    "pages": 1,
+    "page_size": 5,
+    "max_foods": 200,
+    "batch_size": 20,
+    "max_requests": 55
+  },
+  "requests": [
+    {
+      "sequence": 1,
+      "retrieved_utc": "2026-10-22T11:43:22.429840+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "chicken breast",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0001_search.json",
+      "status": 200,
+      "bytes": 92570,
+      "sha256": "b16eb67786d3318d62101b003ccddf4476a7a9a3a7dbc930f378819a474cd49c",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3598"
+    },
+    {
+      "sequence": 2,
+      "retrieved_utc": "2026-10-22T11:43:23.216240+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "chicken breast",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0002_search.json",
+      "status": 200,
+      "bytes": 185944,
+      "sha256": "74557e18b237580a77872836a97e5eb6dc822d556bff8cb87208756415637f09",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3597"
+    },
+    {
+      "sequence": 3,
+      "retrieved_utc": "2026-10-22T11:43:23.590010+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "salmon",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0003_search.json",
+      "status": 200,
+      "bytes": 33137,
+      "sha256": "d521a5553f26768a53c4e4bf9b9cf241777903fb49e3d2da1008cd6f5b2dd7d6",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3596"
+    },
+    {
+      "sequence": 4,
+      "retrieved_utc": "2026-10-22T11:43:24.079694+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "salmon",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0004_search.json",
+      "status": 200,
+      "bytes": 117836,
+      "sha256": "62bd2347488dfa1f935df5f18b99a047168c16fdae657a5bbab67e511a9d8b07",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3595"
+    },
+    {
+      "sequence": 5,
+      "retrieved_utc": "2026-10-22T11:43:24.552433+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "egg",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0005_search.json",
+      "status": 200,
+      "bytes": 89561,
+      "sha256": "342e4ee98d947f027c65e3b1e782036861da6dec5694160b5ddf6aff18687a85",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3594"
+    },
+    {
+      "sequence": 6,
+      "retrieved_utc": "2026-10-22T11:43:25.083299+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "egg",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0006_search.json",
+      "status": 200,
+      "bytes": 101378,
+      "sha256": "ac678f7d7f8e7c89afeeed2d949eac6c77a5c4927fee5bc48d0657e2dd296079",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3593"
+    },
+    {
+      "sequence": 7,
+      "retrieved_utc": "2026-10-22T11:43:25.586401+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "tofu",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0007_search.json",
+      "status": 200,
+      "bytes": 364,
+      "sha256": "b95c1fd577ff767a6eae85cc24ec1acfc43e5af7ad14368760377cc88260a04e",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3592"
+    },
+    {
+      "sequence": 8,
+      "retrieved_utc": "2026-10-22T11:43:26.045502+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "tofu",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0008_search.json",
+      "status": 200,
+      "bytes": 114681,
+      "sha256": "9555aa5518b04bb2e965e7f377ba284a523c0bffe65851f3fa093af2d49e6a79",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3591"
+    },
+    {
+      "sequence": 9,
+      "retrieved_utc": "2026-10-22T11:43:26.337846+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "lentils",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0009_search.json",
+      "status": 200,
+      "bytes": 8359,
+      "sha256": "93d437e01dd11b5044971efc554c724874bb814113debdc37fcad49836a551e5",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3590"
+    },
+    {
+      "sequence": 10,
+      "retrieved_utc": "2026-10-22T11:43:26.980404+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "lentils",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0010_search.json",
+      "status": 200,
+      "bytes": 117519,
+      "sha256": "27cafd32928ff583a6a49c8c89e6f449b5d42fdb58f6ba79dcc2576cdacbde5e",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3589"
+    },
+    {
+      "sequence": 11,
+      "retrieved_utc": "2026-10-22T11:43:27.351722+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "chickpeas",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0011_search.json",
+      "status": 200,
+      "bytes": 16859,
+      "sha256": "f9745b20fb51637751a1fbfc57ae337bd5f1fea30005610f82fdf5ad48e04ac7",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3588"
+    },
+    {
+      "sequence": 12,
+      "retrieved_utc": "2026-10-22T11:43:27.940280+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "chickpeas",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0012_search.json",
+      "status": 200,
+      "bytes": 141330,
+      "sha256": "26b7cfbb1d361968c6d05110cfe45b905ef1815781eb2c151814b8fe3b79a8e7",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3588"
+    },
+    {
+      "sequence": 13,
+      "retrieved_utc": "2026-10-22T11:43:28.400037+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "oats",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0013_search.json",
+      "status": 200,
+      "bytes": 62277,
+      "sha256": "3cbdc6e4f1eee90534ab43116cc5d06450a4a20a51ac0855d57fcc986bdf762b",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3586"
+    },
+    {
+      "sequence": 14,
+      "retrieved_utc": "2026-10-22T11:43:28.931657+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "oats",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0014_search.json",
+      "status": 200,
+      "bytes": 103576,
+      "sha256": "7ecf97653678782afa7404c2dd8b419e3aff0268562477b8a35aee11e2a62743",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3585"
+    },
+    {
+      "sequence": 15,
+      "retrieved_utc": "2026-10-22T11:43:29.305933+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "rice",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0015_search.json",
+      "status": 200,
+      "bytes": 48981,
+      "sha256": "789fc61c2440476095f6b03bbb5f7a38be08e9eed28ed99b27198d83189c602d",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3584"
+    },
+    {
+      "sequence": 16,
+      "retrieved_utc": "2026-10-22T11:43:29.812311+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "rice",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0016_search.json",
+      "status": 200,
+      "bytes": 85357,
+      "sha256": "e1a9ca3b7121503b97823144b8412379a65fa09861f8feb152bf15802d8ac296",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3583"
+    },
+    {
+      "sequence": 17,
+      "retrieved_utc": "2026-10-22T11:43:30.260934+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "broccoli",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0017_search.json",
+      "status": 200,
+      "bytes": 43220,
+      "sha256": "7be192842d299ca4a0f1578dc2983813e07b96818ace22d70ba7985dc5b94bda",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3582"
+    },
+    {
+      "sequence": 18,
+      "retrieved_utc": "2026-10-22T11:43:30.822798+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "broccoli",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0018_search.json",
+      "status": 200,
+      "bytes": 196301,
+      "sha256": "add640f34e50052062bbeca60f9b6d62a0cedc14f599164d732ed92ae22ab7a0",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3581"
+    },
+    {
+      "sequence": 19,
+      "retrieved_utc": "2026-10-22T11:43:31.205073+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "spinach",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0019_search.json",
+      "status": 200,
+      "bytes": 32075,
+      "sha256": "aa44a4eefe62da18e19cb469f6d3f9c5caca7e63a8eb0786872ea01d822a33d7",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3580"
+    },
+    {
+      "sequence": 20,
+      "retrieved_utc": "2026-10-22T11:43:31.781025+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "spinach",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0020_search.json",
+      "status": 200,
+      "bytes": 124440,
+      "sha256": "d568cf399ccfa3ab60b4267755bbf6ababb99b95d535bee9919f38717477169c",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3579"
+    },
+    {
+      "sequence": 21,
+      "retrieved_utc": "2026-10-22T11:43:32.232428+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "banana",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0021_search.json",
+      "status": 200,
+      "bytes": 50655,
+      "sha256": "06c8bc58e08a1185b206fb26a173365d4bcc4dd3a828b9548de312c63615ff88",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3578"
+    },
+    {
+      "sequence": 22,
+      "retrieved_utc": "2026-10-22T11:43:32.777178+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "banana",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0022_search.json",
+      "status": 200,
+      "bytes": 128764,
+      "sha256": "3d2243473d443a57841b83e7c9fa1d1899b004cc8b98a5aeaf561267e478f50b",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3577"
+    },
+    {
+      "sequence": 23,
+      "retrieved_utc": "2026-10-22T11:43:33.243031+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "apple",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0023_search.json",
+      "status": 200,
+      "bytes": 64439,
+      "sha256": "49480a89fe0dc654831a9b2aeac02d6e9649be373dd340260e785c6824d8ff03",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3576"
+    },
+    {
+      "sequence": 24,
+      "retrieved_utc": "2026-10-22T11:43:33.780858+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "apple",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0024_search.json",
+      "status": 200,
+      "bytes": 104830,
+      "sha256": "235a076cd3da15a00d4458c3a3958071bb258df5e38ca7dac552064c0d11b8bd",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3575"
+    },
+    {
+      "sequence": 25,
+      "retrieved_utc": "2026-10-22T11:43:34.329292+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "almonds",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0025_search.json",
+      "status": 200,
+      "bytes": 127478,
+      "sha256": "754fa659acf8b7b583e8944f507d3769c5b47f07a4cc2a904e29aff627d1a89d",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3574"
+    },
+    {
+      "sequence": 26,
+      "retrieved_utc": "2026-10-22T11:43:34.897467+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "almonds",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0026_search.json",
+      "status": 200,
+      "bytes": 183710,
+      "sha256": "b3d67de57539bca11857adc681c17feb9e9f874b68e58c979391d6ae29fb0012",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3573"
+    },
+    {
+      "sequence": 27,
+      "retrieved_utc": "2026-10-22T11:43:35.458077+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "yogurt",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0027_search.json",
+      "status": 200,
+      "bytes": 144001,
+      "sha256": "cddd080c0f84524d0436e763acffaa5b857a8ff44eab984716843c5667be2af9",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3572"
+    },
+    {
+      "sequence": 28,
+      "retrieved_utc": "2026-10-22T11:43:35.937658+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "yogurt",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0028_search.json",
+      "status": 200,
+      "bytes": 100022,
+      "sha256": "10d5114489374f159688bf43898127ab8c832bc703ef78b00028b065b4f2ac07",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3571"
+    },
+    {
+      "sequence": 29,
+      "retrieved_utc": "2026-10-22T11:43:36.403060+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "potato",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0029_search.json",
+      "status": 200,
+      "bytes": 71274,
+      "sha256": "ea8a6317b4efdfae9e837bcb615c190d5a87f55b2b0b6a48132f71d6cac850df",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3570"
+    },
+    {
+      "sequence": 30,
+      "retrieved_utc": "2026-10-22T11:43:36.973216+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "potato",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0030_search.json",
+      "status": 200,
+      "bytes": 206173,
+      "sha256": "0ade61ef1dc2671016e27511182e2ad7a6bff6069d219d1efaef4c60e0bab29b",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3569"
+    },
+    {
+      "sequence": 31,
+      "retrieved_utc": "2026-10-22T11:43:37.504807+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "beans",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0031_search.json",
+      "status": 200,
+      "bytes": 110499,
+      "sha256": "d41c0503aa900d7e6ca841a03971bd452a4147c36eb0899aae6a366967a966a9",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3568"
+    },
+    {
+      "sequence": 32,
+      "retrieved_utc": "2026-10-22T11:43:38.047045+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "beans",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0032_search.json",
+      "status": 200,
+      "bytes": 106314,
+      "sha256": "6c4d23321964d158f29bdb09e5d9f7d7c9af3e9d82d72da19e92b5cc5f154014",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3567"
+    },
+    {
+      "sequence": 33,
+      "retrieved_utc": "2026-10-22T11:43:38.347574+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "quinoa",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0033_search.json",
+      "status": 200,
+      "bytes": 12883,
+      "sha256": "8da6e9841eda31b291f887bd7f1aef009aff397b5c9c772e0aa5b7f8ef161301",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3566"
+    },
+    {
+      "sequence": 34,
+      "retrieved_utc": "2026-10-22T11:43:39.002656+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "quinoa",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0034_search.json",
+      "status": 200,
+      "bytes": 128819,
+      "sha256": "f828d8b6bb12e976615935d9f6e3ad5ab1076a9f95a74a3a1403a1984cf77509",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3565"
+    },
+    {
+      "sequence": 35,
+      "retrieved_utc": "2026-10-22T11:43:39.530625+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "beef",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0035_search.json",
+      "status": 200,
+      "bytes": 116997,
+      "sha256": "75a416ff452145ef1074a09bdf953d2959cd5570c03efd9b0b664e18208062d2",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3564"
+    },
+    {
+      "sequence": 36,
+      "retrieved_utc": "2026-10-22T11:43:40.081475+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "beef",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0036_search.json",
+      "status": 200,
+      "bytes": 152635,
+      "sha256": "253a84eae029e84ee82d81e60560d33622dcda87938f5858c24359fe00cd8acc",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3563"
+    },
+    {
+      "sequence": 37,
+      "retrieved_utc": "2026-10-22T11:43:40.612975+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "milk",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0037_search.json",
+      "status": 200,
+      "bytes": 141614,
+      "sha256": "e626a2bb7bb188731a0e62e021fb06881a3e58884b439686d1ce2c02ff03a616",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3562"
+    },
+    {
+      "sequence": 38,
+      "retrieved_utc": "2026-10-22T11:43:41.282496+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "milk",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0038_search.json",
+      "status": 200,
+      "bytes": 149462,
+      "sha256": "f81ea98ad69e3e1fca146263eb1e1403dcb1c81c6324a7062d9fe823a523b4f8",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3561"
+    },
+    {
+      "sequence": 39,
+      "retrieved_utc": "2026-10-22T11:43:41.765730+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "pumpkin seeds",
+        "dataType": [
+          "Foundation"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0039_search.json",
+      "status": 200,
+      "bytes": 82239,
+      "sha256": "4ee9929a4bb1f0ebdb174af19cd82ccfb9aa83cb1d380508797095eab8127ef0",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3560"
+    },
+    {
+      "sequence": 40,
+      "retrieved_utc": "2026-10-22T11:43:42.340487+00:00",
+      "method": "POST",
+      "endpoint": "/foods/search",
+      "request_body": {
+        "query": "pumpkin seeds",
+        "dataType": [
+          "SR Legacy"
+        ],
+        "pageSize": 5,
+        "pageNumber": 1
+      },
+      "response_file": "responses/0040_search.json",
+      "status": 200,
+      "bytes": 177701,
+      "sha256": "5b2df68643350a2ee4b3f8bd4fb0909c7cebda8733c19c74d7584ec7923dddaf",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3559"
+    },
+    {
+      "sequence": 41,
+      "retrieved_utc": "2026-10-22T11:43:53.213347+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          2759004,
+          2646170,
+          2727569,
+          331960,
+          2514746,
+          171515,
+          174608,
+          171514,
+          172945,
+          173874,
+          2684441,
+          2684440,
+          172343,
+          173688,
+          173687,
+          173689,
+          175138,
+          747997,
+          748967,
+          748236
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0041_details.json",
+      "status": 200,
+      "bytes": 3084770,
+      "sha256": "99835cc03dfcdeae0b65a8f0005e8f78f2f84ced76ba3ef1b360f0a28aceaf69",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3558"
+    },
+    {
+      "sequence": 42,
+      "retrieved_utc": "2026-10-22T11:43:59.634969+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          323793,
+          329490,
+          174901,
+          172673,
+          172674,
+          172741,
+          173429,
+          167722,
+          172451,
+          167695,
+          172450,
+          174291,
+          2644283,
+          172420,
+          168427,
+          174284,
+          171577,
+          175254,
+          2644282,
+          2644288
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0042_details.json",
+      "status": 200,
+      "bytes": 803140,
+      "sha256": "e3e07b214c18862d88c6a9554a30538136f3f72a58ffb1031ea8ccbcf63bb5c1",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3557"
+    },
+    {
+      "sequence": 43,
+      "retrieved_utc": "2026-10-22T11:44:07.540997+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          174288,
+          173756,
+          173800,
+          175206,
+          173799,
+          2261421,
+          2257046,
+          2346397,
+          2346396,
+          173576,
+          172666,
+          172676,
+          172769,
+          168873,
+          1104812,
+          1104867,
+          790214,
+          2710825,
+          2710821,
+          173161
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0043_details.json",
+      "status": 200,
+      "bytes": 1255537,
+      "sha256": "97ab9472fb0c40d8ffdac2cef47e515eaf9afa8e1f9551e7f4d3e90814761dec",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3556"
+    },
+    {
+      "sequence": 44,
+      "retrieved_utc": "2026-10-22T11:44:18.668640+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          167967,
+          169679,
+          169680,
+          168855,
+          747447,
+          170379,
+          170382,
+          170381,
+          169392,
+          169404,
+          1999632,
+          1999633,
+          170494,
+          168462,
+          169400,
+          168912,
+          168911,
+          1105073,
+          1105314,
+          2747660
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0044_details.json",
+      "status": 200,
+      "bytes": 1593336,
+      "sha256": "0f374cd979d51e878a63107ad71c4df91845b4c84aecf621e4c84d6978f8306f",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3555"
+    },
+    {
+      "sequence": 45,
+      "retrieved_utc": "2026-10-22T11:44:34.348573+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          173945,
+          173944,
+          167629,
+          169394,
+          168849,
+          1750340,
+          1750341,
+          1750343,
+          1750342,
+          1750339,
+          174988,
+          175032,
+          170959,
+          168816,
+          168171,
+          2261420,
+          2262074,
+          2346393,
+          2257045,
+          1999631
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0045_details.json",
+      "status": 200,
+      "bytes": 2032699,
+      "sha256": "77f883afa26185a5755112642ba6e560e503e8453f4084dea392f54a7c43b663",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3554"
+    },
+    {
+      "sequence": 46,
+      "retrieved_utc": "2026-10-22T11:44:53.246716+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          170567,
+          171031,
+          169060,
+          170160,
+          170568,
+          2647437,
+          330137,
+          330415,
+          2259793,
+          2259794,
+          168104,
+          168133,
+          167569,
+          173781,
+          2261422,
+          2346403,
+          2346402,
+          2346401,
+          2346404,
+          167943
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0046_details.json",
+      "status": 200,
+      "bytes": 2684105,
+      "sha256": "39942fed2746b23a3d8a839e09c894d870223afba56daa9e103b177c148dd5e3",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3553"
+    },
+    {
+      "sequence": 47,
+      "retrieved_utc": "2026-10-22T11:45:06.910331+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          168446,
+          170092,
+          173508,
+          173343,
+          2644281,
+          2758983,
+          2346400,
+          2758984,
+          2758985,
+          169885,
+          175207,
+          169032,
+          169222,
+          175183,
+          2512372,
+          168917,
+          168874,
+          172027,
+          2758991,
+          323121
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0047_details.json",
+      "status": 200,
+      "bytes": 2335812,
+      "sha256": "c6ffbd474852af043de7934958db505e030007d3386c17b9837b7c4002136a3f",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3552"
+    },
+    {
+      "sequence": 48,
+      "retrieved_utc": "2026-10-22T11:45:21.106162+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          2727573,
+          2759006,
+          2727574,
+          170602,
+          170200,
+          170199,
+          172012,
+          173332,
+          2758990,
+          746766,
+          2259796,
+          174980,
+          167686,
+          173459,
+          171942,
+          167587,
+          2515380,
+          2727578,
+          2515381,
+          325524
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0048_details.json",
+      "status": 200,
+      "bytes": 2131383,
+      "sha256": "756aded708ab6442460f0ac9b09fbb5422bc5779ad2e2b26f126a46fb8484fe9",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3551"
+    },
+    {
+      "sequence": 49,
+      "retrieved_utc": "2026-10-22T11:45:22.938706+00:00",
+      "method": "POST",
+      "endpoint": "/foods",
+      "request_body": {
+        "fdcIds": [
+          2710819,
+          170556,
+          175151,
+          169415,
+          170557,
+          168601
+        ],
+        "format": "full"
+      },
+      "response_file": "responses/0049_details.json",
+      "status": 200,
+      "bytes": 254894,
+      "sha256": "14d0223fcc99fd639bc384eb2fe4e2ce7ac24b6d7182c272d1cae77446b6d4e5",
+      "rate_limit": "3600",
+      "rate_limit_remaining": "3550"
+    }
+  ],
+  "selected_fdc_ids": [
+    2759004,
+    2646170,
+    2727569,
+    331960,
+    2514746,
+    171515,
+    174608,
+    171514,
+    172945,
+    173874,
+    2684441,
+    2684440,
+    172343,
+    173688,
+    173687,
+    173689,
+    175138,
+    747997,
+    748967,
+    748236,
+    323793,
+    329490,
+    174901,
+    172673,
+    172674,
+    172741,
+    173429,
+    167722,
+    172451,
+    167695,
+    172450,
+    174291,
+    2644283,
+    172420,
+    168427,
+    174284,
+    171577,
+    175254,
+    2644282,
+    2644288,
+    174288,
+    173756,
+    173800,
+    175206,
+    173799,
+    2261421,
+    2257046,
+    2346397,
+    2346396,
+    173576,
+    172666,
+    172676,
+    172769,
+    168873,
+    1104812,
+    1104867,
+    790214,
+    2710825,
+    2710821,
+    173161,
+    167967,
+    169679,
+    169680,
+    168855,
+    747447,
+    170379,
+    170382,
+    170381,
+    169392,
+    169404,
+    1999632,
+    1999633,
+    170494,
+    168462,
+    169400,
+    168912,
+    168911,
+    1105073,
+    1105314,
+    2747660,
+    173945,
+    173944,
+    167629,
+    169394,
+    168849,
+    1750340,
+    1750341,
+    1750343,
+    1750342,
+    1750339,
+    174988,
+    175032,
+    170959,
+    168816,
+    168171,
+    2261420,
+    2262074,
+    2346393,
+    2257045,
+    1999631,
+    170567,
+    171031,
+    169060,
+    170160,
+    170568,
+    2647437,
+    330137,
+    330415,
+    2259793,
+    2259794,
+    168104,
+    168133,
+    167569,
+    173781,
+    2261422,
+    2346403,
+    2346402,
+    2346401,
+    2346404,
+    167943,
+    168446,
+    170092,
+    173508,
+    173343,
+    2644281,
+    2758983,
+    2346400,
+    2758984,
+    2758985,
+    169885,
+    175207,
+    169032,
+    169222,
+    175183,
+    2512372,
+    168917,
+    168874,
+    172027,
+    2758991,
+    323121,
+    2727573,
+    2759006,
+    2727574,
+    170602,
+    170200,
+    170199,
+    172012,
+    173332,
+    2758990,
+    746766,
+    2259796,
+    174980,
+    167686,
+    173459,
+    171942,
+    167587,
+    2515380,
+    2727578,
+    2515381,
+    325524,
+    2710819,
+    170556,
+    175151,
+    169415,
+    170557,
+    168601
+  ],
+  "missing_detail_ids": []
+}
