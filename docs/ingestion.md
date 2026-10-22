@@ -55,3 +55,21 @@ A build writes a **new temporary DuckDB file** in the output directory, closes i
 - The initial M03 smoke sample contains only 12 foods and is insufficient as the full MacroMatch catalogue.
 
 Source: [USDA FoodData Central API Guide](https://fdc.nal.usda.gov/api-guide/). Its data are public domain/CC0; keep the API key private and credit USDA.
+
+
+## M04 final ingestion results
+
+The frozen dataset `m04_catalog_v1` was collected
+on 22 October 2026.
+
+- 49 successful API responses
+- 166 unique selected USDA food records
+- 169 preserved search hits
+- 69 Foundation Foods records
+- 97 SR Legacy records
+- Zero missing detail IDs reported
+
+The raw ingestion pipeline successfully populated
+all four DuckDB tables from the frozen snapshot.
+
+The database can be recreated without a USDA API key.
