@@ -191,3 +191,35 @@ def test_committed_m04_catalog_can_be_staged_without_key(tmp_path, monkeypatch):
     assert report["unique_food_keys"] == 166
     assert report["foods_by_data_type"] == {"Foundation": 69, "SR Legacy": 97}
     assert report["missing_source_lineage"] == 0
+
+
+def test_usda_us_date_format(tmp_path):
+    db = sample_db(tmp_path)
+
+    con = duckdb.connect(str(db))
+    try:
+        original = con.execute(
+            "SELECT food_json FROM raw_foods WHERE fdc_id = 101"
+        ).fetchone()[0]
+
+        food = json.loads(original)
+        food["publicationDate"] = "4/1/2019"
+
+        con.execute(
+            "UPDATE raw_foods SET food_json = ? WHERE fdc_id = 101",
+            [json.dumps(food)]
+        )
+    finally:
+        con.close()
+
+    build_staging(db)
+
+    con = duckdb.connect(str(db), read_only=True)
+    try:
+        result = con.execute(
+            "SELECT publication_date FROM stg_foods WHERE fdc_id = 101"
+        ).fetchone()[0]
+
+        assert str(result) == "2019-04-01"
+    finally:
+        con.close()

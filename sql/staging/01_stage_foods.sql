@@ -11,10 +11,24 @@ SELECT
     NULLIF(TRIM(REGEXP_REPLACE(LOWER(COALESCE(rf.description, '')),
         '[^[:alnum:]]+', ' ', 'g')), '') AS search_name,
     NULLIF(TRIM(rf.data_type), '') AS data_type,
-    TRY_CAST(COALESCE(
-        NULLIF(json_extract_string(rf.food_json, '$.publicationDate'), ''),
-        NULLIF(json_extract_string(rf.food_json, '$.publishedDate'), '')
-    ) AS DATE) AS publication_date,
+    COALESCE(
+    TRY_CAST(
+        json_extract_string(rf.food_json, '$.publicationDate')
+        AS DATE
+    ),
+    TRY_STRPTIME(
+        json_extract_string(rf.food_json, '$.publicationDate'),
+        '%m/%d/%Y'
+    )::DATE,
+    TRY_CAST(
+        json_extract_string(rf.food_json, '$.publishedDate')
+        AS DATE
+    ),
+    TRY_STRPTIME(
+        json_extract_string(rf.food_json, '$.publishedDate'),
+        '%m/%d/%Y'
+    )::DATE
+) AS publication_date,
     NULLIF(TRIM(json_extract_string(rf.food_json, '$.ndbNumber')), '') AS ndb_number,
     CASE json_type(rf.food_json, '$.foodCategory')
         WHEN 'VARCHAR' THEN NULLIF(TRIM(json_extract_string(rf.food_json, '$.foodCategory')), '')
