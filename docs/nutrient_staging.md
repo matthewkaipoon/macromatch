@@ -38,18 +38,47 @@ M06 requires M04 and M05 tables. No API key or live network request is required.
 
 ## Measured output
 
-Inspection of all 896 nutrient entries with NULL amounts confirmed that none contained a top-level amount or value field in the original USDA JSON. Most appear to represent nutrient-group metadata rather than quantitative measurements. No existing entries for the selected core macronutrient and energy IDs had NULL amounts. All original entries were preserved without imputation; distinguishing non-quantitative metadata from missing measurements is deferred to M07–M08.
+### M06 staging results
 
+The M06 transformation was executed against the frozen
+`m04_catalog_v1` dataset.
 
-- Raw food count and number of foods containing nutrients.
-- Original nutrient entry count and staged nutrient row count.
-- Distinct observed nutrient-definition variants.
-- Count of missing nutrient IDs, amounts and units.
-- Nested / flat / unknown entry counts.
-- Entries by Foundation versus SR Legacy.
-- Test count and idempotence result.
+| Metric | Result |
+|---|---:|
+| Raw foods processed | 166 |
+| Original nutrient entries | 12,108 |
+| Staged nutrient entries | 12,108 |
+| Unique nutrient entry keys | 12,108 |
+| Foods containing nutrients | 166 |
+| Observed definition variants | 227 |
+| Missing nutrient IDs | 0 |
+| Missing nutrient amounts | 896 |
+| Explicit zero amounts | 2,932 |
+| Missing units | 0 |
+| Nested entries | 12,108 |
+| Flat entries | 0 |
+| Unknown entry structures | 0 |
+| Foundation nutrient entries | 3,477 |
+| SR Legacy nutrient entries | 8,631 |
 
-Do **not** invent expected nutrient totals. The real M04 dataset must determine them.
+All original nutrient-array entries were retained,
+and every staged entry was assigned a unique key.
+
+### Missing-amount investigation
+
+All 896 NULL amounts were investigated against the
+original nutrient-entry JSON.
+
+- Entries containing a top-level amount field: 0
+- Entries containing an alternative value field: 0
+- Core macro/energy entries with NULL amounts: 0
+
+Most NULL entries appear to represent nutrient-group
+metadata rather than quantitative measurements.
+
+The original records were preserved without imputation.
+Further classification of non-quantitative nutrient
+entries will take place in M07–M08.
 
 ## Known limitations
 

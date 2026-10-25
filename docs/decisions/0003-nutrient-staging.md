@@ -25,4 +25,34 @@ USDA Foundation and SR Legacy detailed responses contain repeated nested `foodNu
 
 ## Issue discovered during implementation
 
-**Fill this only if an actual issue is observed while running M06.** Record the source evidence, root cause, code change, and a regression test. Do not invent difficulties for the application narrative.
+## Issue discovered during implementation
+
+The initial staging report identified 896 nutrient
+entries with NULL measurement amounts.
+
+Rather than automatically treating these as failed
+measurements, the original JSON entries were inspected.
+
+The investigation confirmed that none of the 896
+entries contained a top-level amount or value field.
+
+Many corresponded to nutrient-group headings such as
+Carbohydrates, Lipids, Minerals and Amino acids.
+
+No existing entries for the selected core macro and
+energy nutrient IDs had NULL amounts.
+
+## Decision
+
+Retain all original nutrient entries, including
+non-quantitative records, within the staging layer.
+
+Do not replace NULL amounts with zero or delete
+group metadata during M06.
+
+Distinguishing nutrient-group metadata from missing
+quantitative measurements is deferred to M07–M08.
+
+No correction to the M06 extraction code was required
+because the missing amounts were present in the
+source structure rather than introduced by parsing.
