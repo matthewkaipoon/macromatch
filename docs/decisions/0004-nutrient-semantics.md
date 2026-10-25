@@ -1,6 +1,6 @@
 # Decision 0004 — Core nutrient meanings, units, and energy precedence
 
-**Status:** Proposed for M07 — pending final idempotence verification.
+**Status:** Accepted (M07)
 
 ## Context
 

@@ -67,23 +67,24 @@ The runner executes all three SQL models in one transaction, then checks:
 
 `CREATE OR REPLACE TABLE` is safe to repeat. Rebuilds should reproduce the same **table contents**, not necessarily byte-identical database files.
 
-## Measured results — fill in only after local execution
+## Measured results
 
-Metric	Actual result
-Foods	166
-Classified nutrient entries	12,108
-Quantitative entries	11,212
-Group-header candidates	896
-Core nutrient entries	799
-Successfully standardised core entries	799
-Core entries requiring unit changes	0
-Unsupported core units	0
-Foods with selected energy	158
-Foods without selected energy	8
-Ambiguous energy selections	0
-Energy ID 1008 selected	114
-Energy ID 2047 selected	3
-Energy ID 2048 selected	41
+| Metric | Actual result |
+|---|---:|
+| Foods | 166 |
+| Classified nutrient entries | 12,108 |
+| Quantitative entries | 11,212 |
+| Group-header candidates | 896 |
+| Core nutrient entries | 799 |
+| Successfully standardised core entries | 799 |
+| Core entries requiring unit changes | 0 |
+| Unsupported core units | 0 |
+| Foods with selected energy | 158 |
+| Foods without selected energy | 8 |
+| Ambiguous energy selections | 0 |
+| Energy ID 1008 selected | 114 |
+| Energy ID 2047 selected | 3 |
+| Energy ID 2048 selected | 41 |
 
 
 - Tests: 70/70 passed
