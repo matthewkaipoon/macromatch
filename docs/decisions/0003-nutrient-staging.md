@@ -25,8 +25,6 @@ USDA Foundation and SR Legacy detailed responses contain repeated nested `foodNu
 
 ## Issue discovered during implementation
 
-## Issue discovered during implementation
-
 The initial staging report identified 896 nutrient
 entries with NULL measurement amounts.
 

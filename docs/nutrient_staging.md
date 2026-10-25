@@ -87,6 +87,15 @@ entries will take place in M07–M08.
 - Entries with missing identifiers, amounts or units are retained and reported, not discarded.
 - If a whole `foodNutrients` array is absent, M05 food metadata remains; M06 produces no measurement rows for it and reports the missing-array count.
 
+## Final validation
+
+- Full automated test suite: 55 passed
+- Nutrient staging idempotence: Passed
+- Original nutrient entries: 12,108
+- Staged nutrient entries: 12,108
+- Unique nutrient entry keys: 12,108
+- Source-to-staging row reconciliation: Passed
+
 ## Reference
 
 [DuckDB JSON table functions](https://duckdb.org/docs/stable/data/json/json_functions) (`json_each`), and USDA FoodData Central API (https://fdc.nal.usda.gov/api-guide/).
