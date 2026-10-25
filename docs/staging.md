@@ -106,11 +106,6 @@ An independent Python validation subsequently compared all 166 staged publicatio
 
 This confirmed that the corrected transformation retained the intended calendar dates without introducing invalid or incorrectly interpreted values.
 
-### Final validation
-
-- Automated tests: [Enter actual passed count]
-- Idempotence verification: [Enter actual result]
-
 All staging transformations operate on the existing raw DuckDB tables without modifying the original USDA response files.
 
 **USDA source:** <https://fdc.nal.usda.gov/api-guide/>. USDA data are CC0.
