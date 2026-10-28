@@ -22,15 +22,25 @@ WITH source AS (
         regexp_matches(name_key, '(^| )canned( |$)') AS cue_canned,
         regexp_matches(name_key, '(^| )(dried|dry|dehydrated)( |$)') AS cue_dried,
         regexp_matches(name_key, '(^| )frozen( |$)') AS cue_frozen,
+        regexp_matches(name_key, '^almond milk( |$)') AS almond_milk_name,
         regexp_matches(name_key, '^(chia seeds?|seeds?|almonds?|walnuts?|cashews?|peanuts?|hazelnuts?|pistachios?)( |$)') AS seed_nut_name_override,
-        regexp_matches(name_key, '(^| )(bagels?|breads?|crackers?|egg substitute|mayonnaise|soups?|sauces?|yogurt|lunchmeat|bologna|pepperoni|sausages?|burgers?|pizza|casserole)( |$)') AS product_name_cue
+        (
+            regexp_matches(name_key, '(^| )(bagels?|breads?|crackers?|egg substitute|mayonnaise|soups?|sauces?|lunchmeat|bologna|pepperoni|sausages?|burgers?|pizza|casserole)( |$)')
+            OR (
+                regexp_matches(name_key, '(^| )yogurt( |$)')
+                AND NOT regexp_matches(name_key, '^yogurt( greek)? plain( |$)')
+            )
+        ) AS product_name_cue
     FROM source
 ), assigned AS (
     SELECT *,
         CASE
             -- A targeted correction to overly broad USDA source categories:
-            -- chia seeds, for example, can be categorised under cereal grains.
+            -- Chia seeds may appear under cereals; almond milk is a beverage,
+            -- not a whole nut, even though its name begins with 'almond'.
+            WHEN almond_milk_name THEN 'beverages'
             WHEN seed_nut_name_override THEN 'nuts_seeds'
+            WHEN category_text LIKE '%snacks%' THEN 'snacks'
             WHEN category_text LIKE '%baked products%' THEN 'baked_products'
             WHEN category_text LIKE '%soups%' OR category_text LIKE '%sauces%' OR category_text LIKE '%gravies%' THEN 'mixed_dishes_sauces'
             WHEN category_text LIKE '%fats and oils%' THEN 'fats_oils'
@@ -50,7 +60,9 @@ WITH source AS (
             WHEN category_text LIKE '%fast food%' OR category_text LIKE '%meals%' OR category_text LIKE '%entrees%' THEN 'mixed_dishes_sauces'
             ELSE 'unclassified'
         END AS proposed_group,
-        CASE WHEN seed_nut_name_override AND category_text NOT LIKE '%nut and seed%' THEN 'name_override'
+        CASE WHEN almond_milk_name AND category_text NOT LIKE '%beverages%' THEN 'name_override'
+             WHEN almond_milk_name THEN 'usda_category_rule'
+             WHEN seed_nut_name_override AND category_text NOT LIKE '%nut and seed%' THEN 'name_override'
              WHEN seed_nut_name_override THEN 'usda_category_rule'
              WHEN food_category_name IS NOT NULL THEN 'usda_category_rule'
              ELSE 'no_supported_category_rule' END AS category_rule,
@@ -70,6 +82,7 @@ WITH source AS (
              THEN TRUE ELSE FALSE END AS conflicting_preparation_cues,
         CASE WHEN product_name_cue
                   OR category_text LIKE '%baked products%'
+                  OR category_text LIKE '%snacks%'
                   OR category_text LIKE '%soups%'
                   OR category_text LIKE '%sauces%'
                   OR category_text LIKE '%fast food%'
