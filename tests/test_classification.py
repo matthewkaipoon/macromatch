@@ -294,3 +294,30 @@ def test_real_m04_snapshot_with_full_upstream_pipeline(tmp_path, monkeypatch):
     assert r["unique_review_food_keys"] == 166
     assert r["missing_raw_lineage"] == 0
     assert sum(r["proposed_groups"].values()) == 166
+
+def test_unmapped_source_category_has_no_supported_rule(tmp_path):
+    db = fixture_db(
+        tmp_path,
+        extra_foods=[
+            food(
+                1901,
+                "Babyfood, juice, apple",
+                "Baby Foods",
+            ),
+        ],
+    )
+
+    build_classification(db)
+
+    result = query(
+        db,
+        """
+        SELECT proposed_group, category_rule
+        FROM int_food_classification
+        WHERE fdc_id = 1901
+        """,
+    )
+
+    assert result == [
+        ("unclassified", "no_supported_category_rule")
+    ]

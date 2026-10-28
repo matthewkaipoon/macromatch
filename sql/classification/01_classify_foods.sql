@@ -94,7 +94,13 @@ SELECT food_key, snapshot_id, fdc_id, snapshot_name, data_type,
        display_name, description_original, search_name,
        NULLIF(name_key, '') AS name_key,
        food_category_name, food_category_source_json,
-       proposed_group, category_rule, preparation_state,
+       proposed_group,
+        CASE
+            WHEN proposed_group = 'unclassified'
+                THEN 'no_supported_category_rule'
+            ELSE category_rule
+        END AS category_rule,
+        preparation_state,
        cue_raw, cue_cooked, cue_fried, cue_roasted, cue_baked,
        cue_toasted, cue_canned, cue_dried, cue_frozen,
        conflicting_preparation_cues, product_or_composite_candidate,
