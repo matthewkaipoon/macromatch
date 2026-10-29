@@ -8,24 +8,64 @@ M11 is a read-only recommendation service using `cur_food_catalog`, `cur_food_vi
 
 Users may choose any compatible subset of six independent goals: Increase Protein, Increase Fibre, Lower Fat, Lower Calories, Lower Sugars, Increase Calories. Opposing calorie goals cannot be combined. Balanced Nutrition is a separate exploratory preset. This yields 47 compatible non-empty independent goal selections and one balanced preset (48 selections).
 
-## Fixed goal scoring policy
+## Goal scoring policy — M14 saturation correction
 
-All underlying measurements are **per 100g**. Fixed scales prevent search filters from changing individual scores. Scores are project preference indicators from 0–100, **not scientifically validated nutrition or health ratings**.
+All input measurements are validated amounts **per 100g**. The recommendation
+engine was corrected after the Streamlit interface exposed a hard-cap ranking
+problem: dried egg white with 79.9g protein had received the same 100-point
+score as chicken with 32.1g protein, and alphabetical order placed chicken
+first. Source measurements were not incorrect; the ranking policy was.
 
-| Goal | Validated measurement | Component score (capped to 0–100) | Increase target rule |
-|---|---|---|---|
-| Increase Protein | Protein g/100g | `100 * min(protein / 30, 1)` | Protein > 0 |
-| Increase Fibre | Fibre g/100g | `100 * min(fibre / 10, 1)` | Fibre > 0 |
-| Lower Fat | Fat g/100g | `100 * (1 - min(fat / 30, 1))` | None; 0 is valid |
-| Lower Calories | kcal/100g | `100 * (1 - min(kcal / 600, 1))` | None; 0 is valid |
-| Lower Sugars | Total sugars g/100g | `100 * (1 - min(sugars / 25, 1))` | None; 0 is valid (with source caveat) |
-| Increase Calories | kcal/100g | `100 * min(kcal / 600, 1)` | Calories > 0 |
+### Single independent goal
 
-Reference caps (30g protein, 10g fibre, 30g fat, 600kcal, 25g sugars) are **provisional project parameters**, not official thresholds. Inspect real top-ranked foods for saturation and undesirable extremes. Scores saturate at the caps, and ranking then uses deterministic ties.
+**Order directly by the validated measurement:** decreasing for Increase Protein,
+Increase Fibre or Increase Calories; increasing for Lower Fat, Lower Calories
+or Lower Sugars. Only food identity (case-insensitive name, FDC ID, food key)
+resolves exact nutrient-value ties. Rounding the score cannot change the rank.
 
-For multiple selected goals, each goal receives a weight of 1 unless explicitly overridden by `--weight goal=positive_number`. The combined score is the weighted mean of the selected component scores. Protein is never changed to protein-per-100-kcal.
+### Multi-goal combinations
 
-`Balanced` is a **standalone five-input index** (protein/fibre/fat/carbohydrate-by-difference/energy) with weights 25%/25%/20%/10%/20%. Its carbohydrate component is a project-defined preference for closeness to 45g/100g, not a claim that 45g is an optimal dietary target. It requires all five validated inputs and positive energy. It intentionally does not require total-sugars coverage. Review the heuristic critically before presenting it as an app default.
+Different measurements need comparable component scores. To avoid capping
+all values beyond a threshold at the same score, the six independent goal
+components now use *smooth fixed-reference* scaling:
+
+- For an increase goal with validated value `x` and reference `r > 0`: `100*x/(x+r)`.
+- For a decrease goal with validated value `x` and reference `r > 0`: `100*r/(x+r)`.
+
+The reference corresponds to **50 points**, not to a maximum or a dietary
+requirement. These scores approach 100 without reaching it at a finite
+positive value (except that zero receives 100 for decrease goals).
+
+| Goal | Validated measurement | Reference `r` | Direction |
+|---|---|---:|---|
+| Increase Protein | Protein g/100g | 30g | Higher |
+| Increase Fibre | Fibre g/100g | 10g | Higher |
+| Lower Fat | Fat g/100g | 30g | Lower |
+| Lower Calories | Energy kcal/100g | 600 kcal | Lower |
+| Lower Sugars | Total sugars g/100g | 25g | Lower |
+| Increase Calories | Energy kcal/100g | 600 kcal | Higher |
+
+For multiple compatible goals, the result is the weighted average of these
+unrounded scores. Equal weighting is the default; positive user-specified
+weights are supported. Scores depend on fixed parameters rather than the
+current search results. Protein always remains grams per 100g, never protein
+per 100 kcal. The exact values above are **project preferences, not nutritional
+recommendations or scientifically validated thresholds**.
+
+### Balanced Nutrition
+
+The separate five-input Balanced Nutrition preset retains its previous
+capped component formulas and 25%/25%/20%/10%/20% weights. This correction
+does not redefine the balanced index. Its carbohydrate midrange preference
+is a project-defined heuristic, not a dietary target.
+
+### Missing and zero measurements
+
+Source `NULL` and invalid values remain unavailable. Foods missing only some
+selected goals remain **relevant but incomplete**, unranked with `score=None`.
+Explicit zero on a selected increase target remains a non-match, while zero
+on decrease targets is a valid measurement. Opposite calorie goals cannot be
+combined. Existing identity and relevance filters remain unchanged.
 
 ## Two result tiers: primary and relevant but incomplete
 
@@ -117,5 +157,5 @@ These test results were supplied from the user's local environment; they have no
 - Total sugar includes naturally occurring sugar and is not added sugar; low total-sugar content is not sufficient evidence of nutritional superiority.
 - The current database is a selected 166-food snapshot, not a full food database.
 - Very energy-dense foods can dominate Increase Calories in `all_foods`; source context and realistic portions belong in future planning.
-- Scores are capped reference-scale indices, not evidence-based nutrition ratings or macronutrient targets. Explore alternative caps/weights in documented tests.
+- Independent-goal component scores use smooth, fixed reference scales, not evidence-based nutrition ratings or macronutrient targets. The separate balanced preset still uses its original capped components; both policies warrant ongoing evaluation.
 - M12 adds portion comparisons; frontend work will display the two result tiers and communicate missingness.

@@ -45,8 +45,22 @@ def _numeric(value):
     return value is not None and isinstance(value, (int, float)) and math.isfinite(float(value))
 
 
-def _fixed_score(value: float, ceiling: float, increase: bool) -> float:
-    """Fixed reference cap prevents query-dependent normalization and high-value domination."""
+def _fixed_score(value: float, reference: float, increase: bool) -> float:
+    """Monotone score on fixed scales, with no saturation at the reference.
+
+    For nonnegative x: increase = 100*x/(reference+x),
+    decrease = 100*reference/(reference+x). At x=reference the score is 50.
+    These bounded preference scores are NOT nutritional health ratings.
+    """
+    value = float(value)
+    if not math.isfinite(value) or value < 0 or reference <= 0:
+        raise RecommendationError('Invalid nutrient or reference value for scoring')
+    ratio = value / reference
+    return 100.0 * (ratio / (1.0 + ratio) if increase else 1.0 / (1.0 + ratio))
+
+
+def _capped_balanced_score(value: float, ceiling: float, increase: bool) -> float:
+    """Preserve the accepted M11 balanced-preset formula unchanged."""
     fraction = min(max(float(value) / ceiling, 0.0), 1.0)
     return 100.0 * (fraction if increase else 1.0 - fraction)
 
@@ -86,11 +100,11 @@ def _balanced(row):
         missing.append('positive_energy')
     if missing:
         return None, missing, None
-    p = _fixed_score(row['protein_g'], 30.0, True)
-    f = _fixed_score(row['fibre_g'], 10.0, True)
-    fat = _fixed_score(row['fat_g'], 30.0, False)
+    p = _capped_balanced_score(row['protein_g'], 30.0, True)
+    f = _capped_balanced_score(row['fibre_g'], 10.0, True)
+    fat = _capped_balanced_score(row['fat_g'], 30.0, False)
     carb = 100.0 * max(0.0, 1.0 - abs(float(row['carbohydrate_by_difference_g']) - 45.0) / 45.0)
-    energy = _fixed_score(row['energy_kcal_per_100g'], 600.0, False)
+    energy = _capped_balanced_score(row['energy_kcal_per_100g'], 600.0, False)
     components = {'protein': p, 'fibre': f, 'fat_moderation': fat,
                   'carbohydrate_midrange': carb, 'energy_moderation': energy}
     score = sum(BALANCED_WEIGHTS[k] * v for k, v in components.items())
@@ -161,7 +175,7 @@ def _evaluate_row(row, goals, weights):
         'score': score, 'component_scores': {x['goal']: round(x['component_score'], 2) for x in measurements},
         'available_goals': list(goals), 'missing_goals': [],
         'measurements': [dict(x, component_score=round(x['component_score'], 2)) for x in measurements],
-        'explanation': 'Weighted mean of fixed-scale per-100g goal scores; higher is a better match to selected preferences, not a health rating.',
+        'explanation': 'Weighted mean of smooth, non-capped fixed-reference per-100g goal scores; higher better matches the selected preferences, not a health rating.',
     }
 
 
@@ -214,8 +228,21 @@ def recommend_from_rows(rows: list[dict], goals, *, scope='ingredient_first', se
             primary.append(item)
         else:
             incomplete.append(item)
-    # Use unrounded floating-point score to sort; round only after ordering.
-    primary.sort(key=lambda x:(-x['score'],(x['display_name'] or '').casefold(), x['fdc_id'], x['food_key']))
+    # Single independent goals must rank by the actual validated nutrient amount.
+    # A fixed score is still shown, but never used to break single-goal ties.
+    if len(goals) == 1 and goals[0] in GOAL_SPECS:
+        value_field, _, _, _, increasing = GOAL_SPECS[goals[0]]
+        primary.sort(key=lambda item: (
+            -item[value_field] if increasing else item[value_field],
+            (item['display_name'] or '').casefold(), item['fdc_id'], item['food_key'],
+        ))
+    else:
+        # Multi-goal scores use non-saturating components and unrounded values.
+        # Balanced Nutrition retains its previously accepted calculation.
+        primary.sort(key=lambda item: (
+            -item['score'], (item['display_name'] or '').casefold(),
+            item['fdc_id'], item['food_key'],
+        ))
     incomplete.sort(key=lambda x:(-len(x['available_goals']),(x['display_name'] or '').casefold(),x['fdc_id'],x['food_key']))
     primary_count, incomplete_count = len(primary), len(incomplete)
     primary = primary[:top]
@@ -234,7 +261,8 @@ def recommend_from_rows(rows: list[dict], goals, *, scope='ingredient_first', se
         'notes': [
             'All nutrient amounts are per 100g; total sugars means total, not added, sugars.',
             'Primary results have every selected goal measurement. Incomplete results have at least one but lack another; they do not receive a combined score.',
-            'Scores are deterministic, project-defined preference indices and are not dietary guidelines or health ratings.',
+            'Single independent goals rank directly by validated per-100g measurements; combined independent goals use smooth, non-capped fixed-reference scores.',
+            'Scores are deterministic project-defined preference indices, not dietary guidelines or health ratings.',
             'Only explicitly selected goals affect scoring. Energy and total sugars use their source definitions; missing values are never treated as zero.',
         ],
     }
