@@ -1,6 +1,6 @@
 # M13 — Streamlit Application Foundation and Food Discovery
 
-**Status:** Implementation and automated validation completed locally (M13). Final manual preview walkthrough and GitHub publication pending.
+**Status:** Completed and published (M13).
 
 ## Purpose
 

@@ -1,6 +1,6 @@
 # Decision 0011 — Local-First Multipage Streamlit App and Read-Only Food Discovery
 
-**Status:** Provisionally accepted (M13 — implementation and automated verification complete; final manual preview walkthrough pending)
+**Status:** Accepted (M13)
 
 ## Context
 
@@ -329,4 +329,4 @@ M13 has successfully established and locally validated the core Streamlit applic
 
 Automated tests passed, the chicken food-detail view displayed the expected validated measurements and quality statuses, and read-only verification returned `True`.
 
-**Decision: Provisionally accepted. Final acceptance requires the remaining manual preview checks and GitHub publication.**
+**Decision: Provisionally accepted. Final acceptance requires the remaining manual preview checks and GitHub publication.** 
