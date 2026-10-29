@@ -84,7 +84,21 @@ cols[2].metric("Other filtered/excluded records", report["excluded_count"])
 st.caption("Counts cover the entire queried catalogue before display limits. Filter exclusions include name, category and preparation restrictions; not every excluded food lacks nutrition data.")
 
 st.subheader("Primary recommendations")
-st.write("All selected measurements are validated. Foods are ranked by M11's weighted component scores.")
+if report["goals"] == [BALANCED]:
+    st.write("All five preset inputs are validated. The combined index uses M11's documented preset weights.")
+    st.caption("Each visible component is the original M11 component score out of 100. The overall index is not a health grade.")
+elif len(report["goals"]) == 1:
+    st.write("Foods are ranked directly by the validated amount per 100g for your selected goal.")
+    st.caption("The component score is shown for transparency; it does not change the single-goal order.")
+else:
+    st.write("All selected measurements are validated. Foods are ranked by M11's weighted component scores.")
+    applied = report.get("goal_weights") or {}
+    weights_text = ", ".join(
+        f"{goal_label(goal)} x {float(applied.get(goal, 1)):g}"
+        for goal in report["goals"]
+    )
+    st.caption("Each goal component is scored out of 100. The overall score is their weighted mean. "
+               f"Applied importance: {weights_text}.")
 if report["results"]:
     st.dataframe(primary_table(report), hide_index=True, use_container_width=True)
     for item in report["results"]:
