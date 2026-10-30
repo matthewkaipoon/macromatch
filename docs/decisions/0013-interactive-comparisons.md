@@ -463,4 +463,3 @@ Deterministic repeatability and DuckDB read-only integrity were confirmed.
 
 **Decision: Accepted (M15).**
 
-GitHub publication and Issue #15 closure remain separate repository-management steps to verify.
