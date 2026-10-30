@@ -1,7 +1,6 @@
 # M16 — Continuous Integration and Offline Reproducibility
 
-**Status:** Proposed (M16 — pending GitHub Actions and local acceptance evidence)
-
+**Status:** Accepted (M16)
 ## 1. Goal
 
 Prove that an independent Python 3.13 environment can install MacroMatch's pinned dependencies, execute the complete existing regression suite, and rebuild the curated USDA database offline from the committed M04 snapshot. Also verify that downstream read-only discovery, recommendation, and comparison services do not modify the rebuilt database.
@@ -124,6 +123,5 @@ Record the actual workflow run URL, test count and date **only after they exist*
 - Database read-only integrity is verified by SHA-256 during the probe, while reproducible **content** is verified by semantic fingerprints rather than physical DB file hashes.
 - Workflow success does not make nutritional scores clinical recommendations.
 
-## 10. Outcome
 
-**Pending acceptance.** When local and GitHub Actions evidence both pass, update this document and `docs/decisions/0014-ci-and-reproducibility.md` to `Accepted (M16)`, commit the measured outcomes and close Issue #16.
+

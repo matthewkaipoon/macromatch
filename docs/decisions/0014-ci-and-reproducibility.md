@@ -1,6 +1,6 @@
 # Decision 0014 — Offline Rebuild Verification and Continuous Integration
 
-**Status:** Proposed (M16 — awaiting local and GitHub Actions execution)
+**Status:** Accepted (M16)
 
 ## Context
 
@@ -95,4 +95,3 @@ Upload a JSON report of table counts, semantic hashes and read-only probe outcom
 
 ## Outcome
 
-**Pending acceptance.** Mark this decision `Accepted (M16)` only after local and GitHub Actions checks pass, cite the completed workflow run, commit the evidence and close Issue #16.
