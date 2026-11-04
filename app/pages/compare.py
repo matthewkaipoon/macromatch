@@ -1,73 +1,86 @@
 """M15 Streamlit: 2–4 source-aware, searchable food and portion comparisons."""
 from __future__ import annotations
 
-import math
-
 import streamlit as st
 
 from app.services import backend
 from app.services.comparison_ui import (
-    SEARCH_PAGE_SIZE, ComparisonUIError, advisory_messages, food_option_label,
+    SEARCH_PAGE_SIZE, ComparisonUIError, advisory_messages,
     nutrient_table, pairwise_table, quality_table, validate_selections,
     warning_messages,
 )
+from app.services.food_picker import choose_food, picker_options
+from app.services.presentation import friendly_label, small_badge, styled_readonly_table
 from macromatch.compare import ComparisonError, FoodSelection
 from macromatch.discovery import DiscoveryError
 
-st.title("⚖️ Compare foods")
-st.caption("Compare 2–4 specific USDA records. Choose portions in grams; no nutrient values are estimated.")
+st.title("Compare foods")
+st.caption("Compare nutrients side by side. Choose the foods and portions that matter to you.")
 db = backend.database_path()
 
-count = st.selectbox("How many foods?", options=[2, 3, 4], index=0,
-                     help="Select between two and four distinct USDA food records.")
+st.markdown("#### Choose your foods")
+count = st.selectbox("Number of foods", options=[2, 3, 4], index=0,
+                     help="Choose two to four distinct USDA records.")
+
+
+def load_food_choices() -> list[dict]:
+    """Load the full bounded offline catalogue for client-side live filtering.
+
+    M13 search returns at most 50 rows per call; pagination makes the native
+    selectbox search all records, not just the first 50. No writes or API calls.
+    """
+    first = backend.search_foods(db, query="", include_alternates=True,
+                                 limit=SEARCH_PAGE_SIZE, offset=0)
+    foods = list(first["foods"])
+    for offset in range(SEARCH_PAGE_SIZE, first["total"], SEARCH_PAGE_SIZE):
+        page = backend.search_foods(db, query="", include_alternates=True,
+                                    limit=SEARCH_PAGE_SIZE, offset=offset)
+        foods.extend(page["foods"])
+    return foods
+
+
+try:
+    food_options = load_food_choices()
+except (DiscoveryError, OSError, ValueError) as exc:
+    st.error(f"Food search unavailable: {exc}")
+    st.stop()
+
+names = {row["food_key"]: row["display_name"] for row in food_options}
+options = picker_options(food_options)
+st.caption("Search by any words, in any order—for example, 'raw salmon' or 'salmon raw'. Suggestions update as you type.")
 
 chosen_keys: list[str | None] = []
 portions: list[float] = []
 
-for i in range(count):
-    with st.container(border=True):
-        st.subheader(f"Food {i + 1}")
-        name_column, grams_column = st.columns([3, 1])
-        with name_column:
-            search = st.text_input(f"Search by food name or exact FDC ID — food {i + 1}",
-                                   placeholder="e.g. broccoli, 747447, chicken breast",
-                                   key=f"m15_search_{i}")
-        with grams_column:
-            grams = st.number_input(f"Portion for food {i + 1} (g)",
-                                    min_value=1.0, max_value=2000.0,
-                                    value=100.0, step=10.0, key=f"m15_grams_{i}")
-        portions.append(float(grams))
-        try:
-            # All searchable records, including approved alternates, can be explicitly compared.
-            first = backend.search_foods(db, query=search, include_alternates=True,
-                                         limit=SEARCH_PAGE_SIZE, offset=0)
-            page_count = max(1, math.ceil(first["total"] / SEARCH_PAGE_SIZE))
-            if page_count > 1:
-                page_number = st.selectbox(f"Search results page — food {i + 1}",
-                                           options=list(range(1, page_count + 1)),
-                                           key=f"m15_result_page_{i}")
-                found = first if page_number == 1 else backend.search_foods(
-                    db, query=search, include_alternates=True, limit=SEARCH_PAGE_SIZE,
-                    offset=(page_number - 1) * SEARCH_PAGE_SIZE)
-            else:
-                found = first
-        except (DiscoveryError, OSError, ValueError) as exc:
-            st.error(f"Food search unavailable: {exc}")
-            chosen_keys.append(None)
-            continue
+for row_start in range(0, count, 2):
+    grid_cols = st.columns(2, gap="medium")
+    for i, col in zip(range(row_start, min(row_start + 2, count)), grid_cols):
+        with col:
+            with st.container(border=True, key=f"mm_compare_card_{i}"):
+                st.markdown(f"**Food {i + 1}**")
+                search_col, grams_col = st.columns([3, 1])
+                with search_col:
+                    # Preserve an existing selection from the previous picker
+                    # without depending on word order, Python reruns, or network.
+                    legacy = st.session_state.get(f"mm_compare_selected_{i}")
+                    prior = st.session_state.get(f"mm_compare_food_{i}")
+                    selected = choose_food(
+                        options, label=f"Search food {i + 1}",
+                        key=f"mm_compare_picker_{i}",
+                        previous=prior if isinstance(prior, str) else legacy,
+                    )
+                with grams_col:
+                    grams = st.number_input(f"Portion (g) — food {i + 1}",
+                                            min_value=1.0, max_value=2000.0,
+                                            value=100.0, step=10.0, key=f"m15_grams_{i}")
+                portions.append(float(grams))
+                if selected is not None:
+                    small_badge("Selected: " + names[selected])
+                else:
+                    st.caption("Choose a food from the dropdown above.")
+                chosen_keys.append(selected)
 
-        st.caption(f"{found['total']} matching searchable USDA records. Search by FDC ID for an exact record.")
-        by_key = {row["food_key"]: row for row in found["foods"]}
-        selected = st.selectbox(f"Select food {i + 1}", options=[None, *by_key],
-                                format_func=lambda key: "Choose a food…" if key is None else food_option_label(by_key[key]),
-                                key=f"m15_food_{i}")
-        chosen_keys.append(selected)
-        if selected is not None:
-            row = by_key[selected]
-            st.caption(f"Selected FDC {row['fdc_id']} · {row['data_type']} · "
-                       f"{row.get('preparation_state') or 'Unspecified preparation'}")
-
-if st.button("Compare selected foods", type="primary"):
+if st.button("Compare selected foods", type="primary", key="mm_compare_submit", width="stretch"):
     try:
         pair_specs = validate_selections(chosen_keys, portions)
         # Use a complete snapshot-aware key to avoid ambiguity across snapshots.
@@ -77,7 +90,7 @@ if st.button("Compare selected foods", type="primary"):
         st.error(f"Comparison could not be completed: {exc}")
     else:
         st.session_state["m15_completed_report"] = report
-        st.success("Comparison calculated from validated USDA measurements.")
+        st.toast("Comparison ready")
 
 report = st.session_state.get("m15_completed_report")
 if report is None:
@@ -85,58 +98,66 @@ if report is None:
     st.stop()
 
 st.divider()
-st.subheader("Last completed comparison")
-st.caption("The tables below reflect the last submitted comparison, not any unsent changes to the controls above.")
-for i, food in enumerate(report["foods"], 1):
-    st.write(f"**Food {i}: {food['display_name']}** · FDC {food['fdc_id']} · "
-             f"{food['source'].get('data_type')} · {food['portion_g']:g}g")
+st.subheader("Your comparison")
+st.caption("Showing the last completed comparison. Changes above apply only when you compare again.")
+for row_start in range(0, len(report["foods"]), 2):
+    food_cols = st.columns(2, gap="medium")
+    for i, col in zip(range(row_start, min(row_start + 2, len(report["foods"]))), food_cols):
+        with col:
+            with st.container(border=True):
+                food = report["foods"][i]
+                st.caption(f"FOOD {i + 1}")
+                st.markdown(f"**{food['display_name']}**")
+                small_badge(f"{food['portion_g']:g} g portion")
 
-st.subheader("Nutrients for selected portions")
-st.dataframe(nutrient_table(report, basis="per_portion"), hide_index=True, use_container_width=True)
-st.caption("Each column uses its own selected portion. Unavailable does not mean zero.")
+tabs = st.tabs(["Your portions", "Per 100g", "Differences & details"])
+with tabs[0]:
+    st.markdown("#### Nutrients in your selected portions")
+    styled_readonly_table(nutrient_table(report, basis="per_portion"))
+    st.caption("Each food column uses its own selected portion. Unavailable does not mean zero.")
+with tabs[1]:
+    st.markdown("#### Same-weight comparison")
+    styled_readonly_table(nutrient_table(report, basis="per_100g"))
+    st.caption("All values per 100g of the recorded food form. This is the fairest equal-mass comparison.")
+with tabs[2]:
+    if report.get("pairwise_difference") is not None:
+        st.markdown("#### Nutritional differences — Food B minus Food A")
+        styled_readonly_table(pairwise_table(report))
+        st.caption("Positive means the second food has more; negative means less. Missing measurements cannot be compared numerically.")
+    else:
+        st.info("Numerical differences are shown for exactly two foods. Three or four foods remain available side by side in the other tabs.")
+    with st.expander("Nutrient quality and availability"):
+        styled_readonly_table(quality_table(report))
+        st.caption("Carbohydrate by difference includes fibre. Total sugars include naturally occurring sugars.")
 
-st.subheader("Nutrients per 100g")
-st.dataframe(nutrient_table(report, basis="per_100g"), hide_index=True, use_container_width=True)
-st.caption("Use this view for equal-mass comparisons. Values refer to the stated raw, dried or cooked food form.")
-
-if report.get("pairwise_difference") is not None:
-    st.subheader("Nutritional differences — Food B minus Food A")
-    st.dataframe(pairwise_table(report), hide_index=True, use_container_width=True)
-    st.caption("Positive means the second food contains more; negative means it contains less. "
-               "A numerical difference is unavailable if either measurement is missing.")
-else:
-    st.info("For three or four selected foods, nutritional values are shown side by side; "
-            "pairwise differences are calculated only for two foods.")
-
-with st.expander("Nutrient availability and source-quality status"):
-    st.dataframe(quality_table(report), hide_index=True, use_container_width=True)
-    st.caption("USDA carbohydrate by difference includes fibre. Total sugars include naturally occurring sugars, not just added sugars.")
-
-st.subheader("Source and identity information")
-for i, food in enumerate(report["foods"], 1):
-    with st.expander(f"Food {i} — {food['display_name']} · FDC {food['fdc_id']}"):
-        src = food["source"]
-        category = food["classification"]
-        identity = food["identity"]
-        st.write("USDA source:", src.get("data_type") or "Unavailable")
-        st.write("USDA category:", category.get("usda_category") or "Unavailable")
-        st.write("Proposed food group:", category.get("proposed_group") or "Unavailable")
-        st.write("Preparation state:", category.get("preparation_state") or "Unspecified")
-        st.write("Selected energy method:", src.get("selected_energy_definition") or "Unavailable")
-        st.write("Energy nutrient ID:", src.get("selected_energy_id"))
-        st.write("Total sugars nutrient ID:", src.get("total_sugars_source_id"))
-        st.write("Identity-review reason:", identity.get("review_reasons") or "No review flag")
-        st.write("Visibility decision:", identity.get("visibility_reason") or "Unavailable")
-        st.write("Representative food key:", identity.get("representative_food_key") or "Unavailable")
-        st.write("Original API response:", src.get("raw_response_file") or "Unavailable")
-        st.write("Response SHA-256:", src.get("raw_response_sha256") or "Unavailable")
-        st.code(food["food_key"], language="text")
-        for message in warning_messages(food):
-            st.warning(message)
+with st.expander("USDA source and identity information"):
+    for i, food in enumerate(report["foods"], 1):
+        with st.container(border=True):
+            st.markdown(f"**Food {i} · {food['display_name']}**")
+            src = food["source"]
+            category = food["classification"]
+            identity = food["identity"]
+            st.caption(f"FDC {food['fdc_id']} · {src.get('data_type') or 'Unavailable'} · {friendly_label(category.get('proposed_group') or 'Unspecified')}")
+            details = {
+                "USDA category": category.get("usda_category") or "Unavailable",
+                "Preparation": friendly_label(category.get("preparation_state") or "Unspecified"),
+                "Energy method": src.get("selected_energy_definition") or "Unavailable",
+                "Energy nutrient ID": src.get("selected_energy_id"),
+                "Total sugars nutrient ID": src.get("total_sugars_source_id"),
+                "Identity review": identity.get("review_reasons") or "No review flag",
+                "Visibility": identity.get("visibility_reason") or "Unavailable",
+                "Representative key": identity.get("representative_food_key") or "Unavailable",
+                "Raw response": src.get("raw_response_file") or "Unavailable",
+                "SHA-256": src.get("raw_response_sha256") or "Unavailable",
+                "Food key": food["food_key"],
+            }
+            st.json(details, expanded=False)
+            for message in warning_messages(food):
+                st.warning(message)
 
 advisories = advisory_messages(report)
 if advisories:
-    with st.expander("Across-food source and comparability advisories", expanded=True):
+    with st.expander("Source comparability notes"):
         for message in advisories:
             st.info(message)
 

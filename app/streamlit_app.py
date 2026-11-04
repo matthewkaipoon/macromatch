@@ -9,18 +9,20 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from app.services.backend import database_path  # noqa: E402
+from app.theme import inject_theme  # noqa: E402
 
-st.set_page_config(page_title="MacroMatch", page_icon="🥗", layout="wide")
+st.set_page_config(page_title="MacroMatch", page_icon=":material/restaurant:", layout="wide")
+inject_theme()
 
 pages = [
-    st.Page("pages/home.py", title="Home", icon="🏠", default=True),
-    st.Page("pages/discover.py", title="Discover foods", icon="🔎"),
-    st.Page("pages/recommendations.py", title="Recommendations", icon="🎯"),
-    st.Page("pages/compare.py", title="Compare foods", icon="⚖️"),
+    st.Page("pages/home.py", title="Home", icon=":material/home:", default=True),
+    st.Page("pages/discover.py", title="Discover foods", icon=":material/search:"),
+    st.Page("pages/recommendations.py", title="Recommendations", icon=":material/track_changes:"),
+    st.Page("pages/compare.py", title="Compare foods", icon=":material/balance:"),
 ]
 page = st.navigation(pages, position="sidebar")
-st.sidebar.caption("USDA FoodData Central · Foundation + SR Legacy")
-st.sidebar.caption("Curated, offline, source-aware nutrition")
+st.sidebar.markdown("**MacroMatch**")
+st.sidebar.caption("Find foods. Follow your goals. Compare with confidence.")
 
 if not database_path().is_file():
     st.error("Local curated database not found.")

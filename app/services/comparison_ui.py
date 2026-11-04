@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import math
 import re
+from collections import Counter
 
 from app.services.recommendation_ui import quality_label
 
@@ -93,9 +94,28 @@ def _numeric_text(value, unit: str, *, signed: bool = False) -> str:
     return f"{amount} {unit}"
 
 
-def _food_heading(food: dict, index: int, *, portion: bool) -> str:
-    fdc_id = food.get("fdc_id", "?")
-    return f"Food {index} · FDC {fdc_id}" + (f" · {food.get('portion_g', '?'):g}g" if portion else "")
+def _food_headings(foods: list[dict], *, portion: bool) -> list[str]:
+    """Lead with names; disambiguate matching USDA descriptions only as needed."""
+    names = [str(food.get("display_name") or f"Food {i}").strip()
+             for i, food in enumerate(foods, 1)]
+    name_counts = Counter(name.casefold() for name in names)
+    labels = [
+        name + (f" · {food.get('source', {}).get('data_type') or 'USDA'}"
+                if name_counts[name.casefold()] > 1 else "")
+        for name, food in zip(names, foods)
+    ]
+    label_counts = Counter(label.casefold() for label in labels)
+    for i, (label, food) in enumerate(zip(labels, foods)):
+        if label_counts[label.casefold()] > 1:
+            labels[i] = f"{label} · FDC {food.get('fdc_id', '?')}"
+    # Even separate snapshots can have identical FDC IDs; keep each column unique.
+    final_counts = Counter(label.casefold() for label in labels)
+    for i, label in enumerate(labels):
+        if final_counts[label.casefold()] > 1:
+            labels[i] = f"{label} · Food {i + 1}"
+    if portion:
+        labels = [f"{label} · {food['portion_g']:g} g" for label, food in zip(labels, foods)]
+    return labels
 
 
 def nutrient_table(report: dict, *, basis="per_portion") -> list[dict]:
@@ -104,22 +124,25 @@ def nutrient_table(report: dict, *, basis="per_portion") -> list[dict]:
         raise ComparisonUIError("Choose per-100g or selected-portion measurements.")
     foods = report.get("foods", [])
     rows = []
+    headings = _food_headings(foods, portion=basis == "per_portion")
     for metric, label, unit in METRICS:
         row = {"Measurement": label}
-        for i, food in enumerate(foods, 1):
+        for food, heading in zip(foods, headings):
             value = food["nutrients"][metric][basis]
-            row[_food_heading(food, i, portion=basis == "per_portion")] = _numeric_text(value, unit)
+            row[heading] = _numeric_text(value, unit)
         rows.append(row)
     return rows
 
 
 def quality_table(report: dict) -> list[dict]:
     rows = []
+    foods = report.get("foods", [])
+    headings = _food_headings(foods, portion=False)
     for metric, label, _unit in METRICS:
         row = {"Measurement": label}
-        for i, food in enumerate(report.get("foods", []), 1):
+        for food, heading in zip(foods, headings):
             measure = food["nutrients"][metric]
-            row[_food_heading(food, i, portion=False)] = ("Available" if measure["available"]
+            row[heading] = ("Available" if measure["available"]
                 else quality_label(measure.get("status")))
         rows.append(row)
     return rows
@@ -130,7 +153,8 @@ def pairwise_table(report: dict) -> list[dict]:
     pair = report.get("pairwise_difference")
     if pair is None:
         return []
-    by_key = {f["food_key"]: f"FDC {f['fdc_id']}" for f in report.get("foods", [])}
+    foods = report.get("foods", [])
+    by_key = {food["food_key"]: label for food, label in zip(foods, _food_headings(foods, portion=False))}
     rows = []
     for metric, label, unit in METRICS:
         measurement = pair["metrics"][metric]

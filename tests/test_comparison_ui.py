@@ -24,7 +24,7 @@ def food(fdc, portion=100, **overrides):
 
 
 def report():
-    a, b = food(170379, 100), food(747447, 150)
+    a, b = food(170379, 100), food(747447, 150, display_name="Broccoli, steamed")
     b["nutrients"]["protein"] = {"per_100g": 3.0, "per_portion": 4.5, "status": "valid", "available": True, "unit": "g"}
     return {"food_count": 2, "foods": [a, b], "comparison_advisories": ["different_usda_data_types"],
             "pairwise_difference": {"metrics": {m: {"status": "comparable", "per_100g_delta_second_minus_first": (1.0 if m == "protein" else 0.0),
@@ -78,19 +78,20 @@ def test_option_label_disambiguates_same_name_by_id_source_prep_snapshot():
 def test_nutrient_table_contains_all_six_measures_in_stable_order():
     r = nutrient_table(report())
     assert [x["Measurement"] for x in r] == [m[1] for m in METRICS]
-    assert r[0]["Food 1 · FDC 170379 · 100g"] == "2 kcal"
+    assert r[0]["Broccoli, raw · 100 g"] == "2 kcal"
+    assert "Food 1" not in r[0] and "FDC 170379" not in r[0]
 
 
 def test_portion_table_uses_m12_portion_values_not_ui_arithmetic():
     r = nutrient_table(report(), basis="per_portion")
     protein = next(x for x in r if x["Measurement"] == "Protein")
-    assert protein["Food 2 · FDC 747447 · 150g"] == "4.5 g"
+    assert protein["Broccoli, steamed · 150 g"] == "4.5 g"
 
 
 def test_per_100g_table_independent_from_selected_portion():
     r = nutrient_table(report(), basis="per_100g")
     protein = next(x for x in r if x["Measurement"] == "Protein")
-    assert protein["Food 2 · FDC 747447"] == "3 g"
+    assert protein["Broccoli, steamed"] == "3 g"
 
 
 def test_missing_values_display_unavailable_and_zero_distinct():
@@ -100,8 +101,8 @@ def test_missing_values_display_unavailable_and_zero_distinct():
     r["foods"][1]["nutrients"]["total_sugars"] = {
         "per_100g": 0.0, "per_portion": 0.0, "status": "valid", "available": True, "unit": "g"}
     rows = nutrient_table(r)
-    assert next(x for x in rows if x["Measurement"].startswith("Carbohydrate"))["Food 1 · FDC 170379 · 100g"] == "Unavailable"
-    assert next(x for x in rows if x["Measurement"] == "Total sugars")["Food 2 · FDC 747447 · 150g"] == "0 g"
+    assert next(x for x in rows if x["Measurement"].startswith("Carbohydrate"))["Broccoli, raw · 100 g"] == "Unavailable"
+    assert next(x for x in rows if x["Measurement"] == "Total sugars")["Broccoli, steamed · 150 g"] == "0 g"
 
 
 def test_missing_values_show_quality_reason():
@@ -109,7 +110,7 @@ def test_missing_values_show_quality_reason():
     r["foods"][0]["nutrients"]["protein"] = {
         "per_100g": None, "per_portion": None, "status": "missing_entry", "available": False, "unit": "g"}
     rows = quality_table(r)
-    assert next(x for x in rows if x["Measurement"] == "Protein")["Food 1 · FDC 170379"] == "Not reported by source"
+    assert next(x for x in rows if x["Measurement"] == "Protein")["Broccoli, raw"] == "Not reported by source"
 
 
 def test_pairwise_difference_is_signed_second_minus_first_and_not_recalculated():
@@ -127,7 +128,17 @@ def test_missing_pairwise_delta_explains_which_food_is_unavailable():
         "unavailable_in": ["snap:170379"]}
     result = next(x for x in pairwise_table(r) if x["Measurement"] == "Total sugars")
     assert result["Selected portions (B − A)"] == "Unavailable"
-    assert result["Status"] == "Unavailable in FDC 170379"
+    assert result["Status"] == "Unavailable in Broccoli, raw"
+
+
+def test_identical_food_names_are_distinguishable_without_replacing_the_names():
+    r = report()
+    r["foods"][1]["display_name"] = "Broccoli, raw"
+    headings = list(nutrient_table(r)[0])[1:]
+    assert len(set(headings)) == 2
+    assert all(heading.startswith("Broccoli, raw") for heading in headings)
+    assert any("FDC 170379" in heading for heading in headings)
+    assert any("FDC 747447" in heading for heading in headings)
 
 
 def test_three_or_four_foods_do_not_invent_pairwise_deltas():

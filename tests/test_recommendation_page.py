@@ -11,7 +11,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_m14_page_defines_primary_and_incomplete_ui():
     source = (ROOT / "app/pages/recommendations.py").read_text(encoding="utf-8")
-    assert "st.multiselect(" in source
+    assert "toggle_goal" in source
+    assert "st.segmented_control(" in source
+    assert "interactive_table(" in source
     assert "st.slider(" in source
     assert 'st.subheader("Primary recommendations")' in source
     assert 'st.subheader("Relevant but incomplete foods")' in source
@@ -63,11 +65,19 @@ def test_m14_streamlit_page_renders_and_submits_using_m11(monkeypatch, tmp_path)
     assert not at.exception
     at.switch_page("pages/recommendations.py").run()
     assert not at.exception
-    assert len(at.multiselect) == 1
-    assert len(at.button) >= 1
-    at.button[0].click().run()
+    assert len(at.multiselect) == 0
+    assert sum(button.key.startswith("mm_goal_") for button in at.button) == 6
+    next(button for button in at.button if button.key == "mm_find_recommendations").click().run()
     assert not at.exception
     assert len(calls) == 1
     assert calls[0][0] == fake_db
     assert calls[0][1] == ["increase_protein"]
-    assert len(at.dataframe) >= 2
+    assert any(button.key.startswith("mm_cell_primary_") for button in at.button)
+    assert any(button.key.startswith("mm_cell_incomplete_") for button in at.button)
+    next(button for button in at.button if button.key == "mm_cell_primary_0_1").click().run()
+    assert not at.exception
+    assert any(item.value == "Food B" for item in at.subheader)
+    next(button for button in at.button if button.key == "mm_cell_incomplete_0_0").click().run()
+    assert not at.exception
+    assert any(item.value == "Food A" for item in at.subheader)
+    assert any("Why this food isn't ranked" in item.value for item in at.markdown)
