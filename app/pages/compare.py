@@ -47,7 +47,6 @@ except (DiscoveryError, OSError, ValueError) as exc:
 
 names = {row["food_key"]: row["display_name"] for row in food_options}
 options = picker_options(food_options)
-st.caption("Search by any words, in any order—for example, 'raw salmon' or 'salmon raw'. Suggestions update as you type.")
 
 chosen_keys: list[str | None] = []
 portions: list[float] = []

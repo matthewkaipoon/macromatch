@@ -47,7 +47,18 @@ def test_no_emojis_in_app_titles_or_section_controls():
     assert all(ord(char) < 0x1F000 for char in entrypoint)
 
 
-def test_frontend_uses_clickable_tables_and_shared_dark_theme():
+def test_user_facing_explanations_avoid_internal_milestones_and_search_instructions():
+    recommendations = (ROOT / "app/pages/recommendations.py").read_text(encoding="utf-8")
+    compare = (ROOT / "app/pages/compare.py").read_text(encoding="utf-8")
+    entrypoint = (ROOT / "app/streamlit_app.py").read_text(encoding="utf-8")
+    picker_js = (ROOT / "app/static/food_picker.js").read_text(encoding="utf-8")
+    assert "M11's" not in recommendations
+    assert "M04–M10" not in entrypoint
+    assert "Search by any words" not in compare
+    assert 'field.placeholder = "Search foods..."' in picker_js
+
+
+def test_frontend_uses_clickable_tables_and_shared_charcoal_theme():
     discover = (ROOT / "app/pages/discover.py").read_text(encoding="utf-8")
     recommendations = (ROOT / "app/pages/recommendations.py").read_text(encoding="utf-8")
     theme = (ROOT / ".streamlit/config.toml").read_text(encoding="utf-8")
@@ -56,7 +67,11 @@ def test_frontend_uses_clickable_tables_and_shared_dark_theme():
     assert "st.dataframe(" not in discover
     assert "st.dataframe(" not in recommendations
     assert "base = \"dark\"" in theme
-    assert "#111419" in theme
+    assert 'backgroundColor = "#2B3034"' in theme
+    assert 'primaryColor = "#93BEF0"' in theme
+    shared_theme = (ROOT / "app/theme.py").read_text(encoding="utf-8")
+    assert "--mm-sage: #B5D7C0" in shared_theme
+    assert "mm-tile-kicker" in (ROOT / "app/pages/home.py").read_text(encoding="utf-8")
     assert (ROOT / "app/static/Manrope-Variable.ttf").is_file()
     assert (ROOT / "app/static/OFL-Manrope.txt").is_file()
     assert "st.page_link" in (ROOT / "app/pages/home.py").read_text(encoding="utf-8")

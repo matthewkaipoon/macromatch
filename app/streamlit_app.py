@@ -26,7 +26,7 @@ st.sidebar.caption("Find foods. Follow your goals. Compare with confidence.")
 
 if not database_path().is_file():
     st.error("Local curated database not found.")
-    st.info("Run the M04–M10 data pipeline, then the total-sugars extension, on your computer. The DuckDB file is intentionally excluded from Git.")
+    st.info("The local food catalogue is not ready. Complete the offline data setup to use MacroMatch.")
     st.code(".\\.venv\\Scripts\\python.exe .\\scripts\\build_curated.py\n.\\.venv\\Scripts\\python.exe .\\scripts\\build_total_sugars.py", language="powershell")
     st.stop()
 

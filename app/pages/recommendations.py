@@ -158,20 +158,19 @@ def show_food_detail(item: dict, *, incomplete: bool, detail_key: str) -> None:
 
 st.subheader("Primary recommendations")
 if report["goals"] == [BALANCED]:
-    st.write("All five preset inputs are validated. The combined index uses M11's documented preset weights.")
-    st.caption("Each visible component is the original M11 component score out of 100. The overall index is not a health grade.")
+    st.write("Foods are ranked using a balanced mix of five nutritional measures.")
+    st.caption("The score shows how well each food matches this preset, not its overall healthiness.")
 elif len(report["goals"]) == 1:
     st.write("Foods are ranked directly by the validated amount per 100g for your selected goal.")
     st.caption("The component score is shown for transparency; it does not change the single-goal order.")
 else:
-    st.write("All selected measurements are validated. Foods are ranked by M11's weighted component scores.")
+    st.write("Foods are ranked by how closely they match your selected nutrition goals.")
     applied = report.get("goal_weights") or {}
     weights_text = ", ".join(
         f"{goal_label(goal)} x {float(applied.get(goal, 1)):g}"
         for goal in report["goals"]
     )
-    st.caption("Each goal component is scored out of 100. The overall score is their weighted mean. "
-               f"Applied importance: {weights_text}.")
+    st.caption(f"Goal importance: {weights_text}. A higher score means a closer match to your choices.")
 if report["results"]:
     original_rows = primary_table(report)
     omitted = {"Rank", "Food", "FDC ID", "USDA source", "Score / 100"}

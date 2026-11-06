@@ -37,7 +37,7 @@ export default function (component) {
   // The HTML is trusted static markup. USDA names are inserted only as text.
   label.textContent = String(data?.label ?? "Choose a food");
   field.setAttribute("aria-label", label.textContent);
-  field.placeholder = "Type words in any order...";
+  field.placeholder = "Search foods...";
   if (selected !== null) {
     const current = byKey.get(selected);
     if (field.value !== current.name) field.value = current.name;

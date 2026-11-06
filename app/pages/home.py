@@ -18,14 +18,18 @@ except (DiscoveryError, OSError) as exc:
 
 st.markdown("### What would you like to do?")
 tiles = (
-    ("mm_home_discover", "01", "Discover foods", "Search the catalogue and explore nutritional details.", "pages/discover.py", "Explore foods"),
-    ("mm_home_recommend", "02", "Find your fit", "Get food suggestions based on the nutrients that matter to you.", "pages/recommendations.py", "Find recommendations"),
-    ("mm_home_compare", "03", "Compare foods", "See how different foods and portions stack up.", "pages/compare.py", "Start comparing"),
+    ("mm_home_discover", "01", "EXPLORE", "Discover foods", "Search the catalogue and explore nutritional details.", "pages/discover.py", "Explore foods"),
+    ("mm_home_recommend", "02", "PERSONALISE", "Find your fit", "Get food suggestions based on the nutrients that matter to you.", "pages/recommendations.py", "Find recommendations"),
+    ("mm_home_compare", "03", "COMPARE", "Compare foods", "See how different foods and portions stack up.", "pages/compare.py", "Start comparing"),
 )
-for col, (key, index, title, description, destination, label) in zip(st.columns(3, gap="medium"), tiles):
+for col, (key, index, kicker, title, description, destination, label) in zip(st.columns(3, gap="medium"), tiles):
     with col:
         with st.container(border=True, key=key):
-            st.markdown(f'<div class="mm-tile-index">{index}</div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="mm-tile-top"><span class="mm-tile-index">{index}</span>'
+                f'<span class="mm-tile-kicker">{kicker}</span></div>',
+                unsafe_allow_html=True,
+            )
             st.markdown(f'<div class="mm-tile-title">{title}</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="mm-tile-desc">{description}</div>', unsafe_allow_html=True)
             st.page_link(destination, label=label)

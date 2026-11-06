@@ -8,11 +8,15 @@ comparison calculations. The app continues to use a local, read-only DuckDB.
 
 ## What changed
 
-- A locally bundled Manrope variable font (SIL Open Font License), a graphite
-  and neutral-dark palette with selective blue, green and amber accents, a
-  narrower sidebar, and less empty space above page titles.
+- A locally bundled Manrope variable font (SIL Open Font License) and a
+  **medium-charcoal, blue-and-sage visual system**. The chosen direction is
+  premium fitness with a lighter modern-wellness influence: clean, flatter
+  panels with subtle borders, balanced spacing, and restrained accent colours
+  rather than a predominantly blue or near-black interface. A narrower sidebar
+  and reduced space above titles keep the content in focus.
 - Home: three prominent, similarly sized navigation cards with numbered design
-  marks; compact catalogue figures moved to the bottom; the outdated M13 status
+  marks and small category labels; a blue/sage top-edge accent distinguishes
+  each card. Compact catalogue figures moved to the bottom; the outdated M13 status
   banner removed. Emoji labels have been removed across the app, including
   navigation, page titles and goal-selection buttons; sidebar icons use Material
   symbols instead.
@@ -32,7 +36,7 @@ comparison calculations. The app continues to use a local, read-only DuckDB.
   searchable food dropdowns that filter **live as you type** with case-insensitive,
   **word-order-independent** matching (e.g., both `salmon raw` and `raw salmon`
   match *Fish, salmon, pink, raw*), and
-  neutral-styled nutritional comparison tables in tabs. The selectors load
+  sage-accented, charcoal nutritional comparison tables in tabs. The selectors load
   the **entire** curated catalogue using bounded read-only search pages, not
   only the first 50 or six foods. Comparison column headers lead with food
   **names** and selected gram portions; duplicate names gain provenance labels
@@ -63,6 +67,9 @@ comparison calculations. The app continues to use a local, read-only DuckDB.
 - Source lineage, measurement status and comparability advisories remain
   accessible on demand.
 - Score ranking and portion calculations remain owned by the M11/M12 services.
+- Both the standard Streamlit inputs and the separately styled live-search
+  component use the same neutral panel colours, understated corners and
+  accessible contrasting text; design adjustments are CSS/presentation only.
 
 ## Verification
 
@@ -93,6 +100,9 @@ Manual UI acceptance checklist:
    different gram portions and verify food **names** appear atop all nutrient
    tables. Check the tabs, source notes and duplicate-record validation.
 5. Resize the browser window and expand/collapse the sidebar to check layout.
+6. Check visual consistency across all four pages: medium charcoal rather than
+   black, blue primary actions, sage selection feedback, flatter neutral panels,
+   legible table headers, and no awkward focus outlines or clipped dropdowns.
 
 There is no automated pixel-perfect browser screenshot check in this update;
 visual acceptance should be completed locally before the final documentation
