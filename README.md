@@ -4,6 +4,19 @@
 
 MacroMatch is a Python, DuckDB and Streamlit project for The Data School's Data Engineering Consultant application. It is built using a pipeline of food composition data from the US Department of Agriculture (USDA), and combines a frontend application with the data engineering needed to make results traceable and understandable.
 
+<img width="3455" height="1732" alt="image" src="https://github.com/user-attachments/assets/4d49d7d8-64f6-4085-8ea1-bbd2f31c0bda" />
+
+<img width="3455" height="1735" alt="image" src="https://github.com/user-attachments/assets/dbb4304c-ac26-4725-a67f-e829d0acdd27" />
+
+<img width="3422" height="1730" alt="image" src="https://github.com/user-attachments/assets/e9c437b1-e881-41aa-9c71-482f8fba8c33" />
+
+<img width="3427" height="1735" alt="image" src="https://github.com/user-attachments/assets/e43e89f2-c4ef-4d4c-bb4e-3c76c2c4cd0f" />
+
+<img width="3415" height="1710" alt="image" src="https://github.com/user-attachments/assets/fbd13dea-679a-4104-a0ef-63fb385958f6" />
+
+<img width="3427" height="1702" alt="image" src="https://github.com/user-attachments/assets/147c4ea9-e313-4741-97f4-d18924200e66" />
+
+
 ## What I built and who for
 
 I built MacroMatch for people who want to make more informed dietary choices by exploring the nutritional composition of foods, allowing them to make informed comparisons. For example, someone trying to increase their protein or fibre intake can look for foods that fit those preferences rather than manually comparing nutritional values. It is also useful for anyone who wants to compare portions of several ingredients all at once.
