@@ -1,4 +1,4 @@
-# MacroMatch
+# MacroMatch - The Data School Application
 
 **Explore, compare, and discover foods that match your nutritional goals.**
 
